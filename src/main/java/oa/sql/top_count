@@ -1,0 +1,16 @@
+Customer
+CustomerID    CustomerName    ContactName    Address    City    PostalCode    Country
+Employee
+EmployeeID    LastName    FirstName    BirthDate    Photo    Notes
+Order
+OrderID    CustomerID    EmployeeID    OrderDate    ShipperID
+
+// write a query to find out the EmployeeID who took the highest number of orders from Customers residing in USA
+
+SELECT E.EmployeeID, COUNT(ORDERID)
+FROM Order AS O
+INNER JOIN Employee AS E ON O.EmployeeID = E.EmployeeID
+INNER JOIN Customer AS C ON O.CustomerID = C.CustomerID
+WHERE COUNTRY = 'USA'
+ORDER BY COUNT(ORDERID) DESSENDING
+TOP 1
