@@ -23,7 +23,7 @@ public class _5243_Tuple_with_Same_Product {
             }
 
             int n = e.getValue();
-            // C n 2 = n! / (2! * (n - 2)!) = n (n - 1) /  2
+            // C n 2 = n! / (2! * (n - 2)!) = n (n - 1) / 2
             result += (n * (n - 1) / 2) * 8;
         }
 
