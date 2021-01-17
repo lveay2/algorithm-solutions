@@ -35,7 +35,7 @@ public class _5243_Tuple_with_Same_Product {
         System.out.println(solution.tupleSameProduct(new int[]{1, 2, 4, 5, 10}));
         System.out.println(solution.tupleSameProduct(new int[]{2, 3, 4, 6, 8, 12}));
         System.out.println(solution.tupleSameProduct(new int[]{2, 3, 5, 7}));
-        Long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         System.out.println(solution.tupleSameProduct(new int[]{549, 758, 620, 258, 688, 676, 415, 5, 12, 744, 440, 808, 889, 355,
                 233, 810, 312, 822, 910, 210, 570, 203, 593, 874, 412, 518, 22, 251, 708, 497, 725, 180, 826, 653, 629, 257, 330, 90, 719, 80,
                 849, 924, 313, 600, 107, 877, 164, 33, 132, 2, 124, 729, 57, 394, 890, 891, 772, 205, 908, 236, 987, 273, 811, 428, 449, 206, 37,
