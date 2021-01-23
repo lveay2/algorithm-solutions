@@ -9,12 +9,12 @@ import java.util.List;
 
 public class ClassNameFormater {
 
+    private static final String SRC_MAIN_JAVA = "src" + File.separator + "main" + File.separator + "java";
     private static final String UNDER_SCORE = "_";
     private static final String PACKAGE_LEETCODE = "leetcode";
     private static final String PACKAGE_EDUCATIVE = "educative";
     private static final String PACKAGE_LINTCODE = "lintcode";
     private static final String PACKAGE_OA = "oa";
-    private static final String SRC_MAIN_JAVA = "src" + File.separator + "main" + File.separator + "java";
 
     private static String packageName = null;
     private static String subFolder = null;
@@ -25,14 +25,17 @@ public class ClassNameFormater {
 //        packageName = PACKAGE_LEETCODE;
 //        subFolder = "";
 
-        packageName = PACKAGE_LINTCODE;
-        subFolder = "dynamic_programming";
+//        packageName = PACKAGE_LINTCODE;
+//        subFolder = "dynamic_programming";
 //        subFolder = "dfs";
 //        subFolder = "bfs";
 //        subFolder = "system_design";
 //        subFolder = "_100_good_problems";
 //        subFolder = "twopointers";
 //        subFolder = "fb";
+
+        packageName = PACKAGE_EDUCATIVE;
+        subFolder = "dynamic_programming";
 
         createClassFile(className, packageName, subFolder);
     }
