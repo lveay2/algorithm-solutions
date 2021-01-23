@@ -20,7 +20,7 @@ public class ClassNameFormater {
     private static String subFolder = null;
 
     public static void main(String[] args) throws IOException {
-        String className = "Topological Sort";
+        String className = "Tasks Scheduling";
 
 //        packageName = PACKAGE_LEETCODE;
 //        subFolder = "";
