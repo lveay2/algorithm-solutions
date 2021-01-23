@@ -16,20 +16,23 @@ public class ClassNameFormater {
     private static final String PACKAGE_OA = "oa";
     private static final String SRC_MAIN_JAVA = "src" + File.separator + "main" + File.separator + "java";
 
+    private static String packageName = null;
+    private static String subFolder = null;
+
     public static void main(String[] args) throws IOException {
+        String className = "111. Climbing Stairs\n";
 
-        String className = "634. Word Squares\n";
+//        packageName = PACKAGE_LEETCODE;
+//        subFolder = "";
 
-//        String packageName = PACKAGE_LEETCODE;
-//        String subFolder = "";
-
-        String packageName = PACKAGE_LINTCODE;
-        String subFolder = "dfs";
-//        String subFolder = "bfs";
-//        String subFolder = "system_design";
-//        String subFolder = "_100_good_problems";
-//        String subFolder = "twopointers";
-//        String subFolder = "fb";
+        packageName = PACKAGE_LINTCODE;
+        subFolder = "dynamic_programming";
+//        subFolder = "dfs";
+//        subFolder = "bfs";
+//        subFolder = "system_design";
+//        subFolder = "_100_good_problems";
+//        subFolder = "twopointers";
+//        subFolder = "fb";
 
         createClassFile(className, packageName, subFolder);
     }
