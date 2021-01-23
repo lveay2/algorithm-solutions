@@ -20,7 +20,7 @@ public class ClassNameFormater {
     private static String subFolder = null;
 
     public static void main(String[] args) throws IOException {
-        String className = "111. Climbing Stairs\n";
+        String className = "Topological Sort";
 
 //        packageName = PACKAGE_LEETCODE;
 //        subFolder = "";
@@ -31,11 +31,12 @@ public class ClassNameFormater {
 //        subFolder = "bfs";
 //        subFolder = "system_design";
 //        subFolder = "_100_good_problems";
-//        subFolder = "twopointers";
+//        subFolder = "two_pointers";
 //        subFolder = "fb";
 
         packageName = PACKAGE_EDUCATIVE;
-        subFolder = "dynamic_programming";
+//        subFolder = "dynamic_programming";
+        subFolder = "topological_sort";
 
         createClassFile(className, packageName, subFolder);
     }
@@ -43,16 +44,17 @@ public class ClassNameFormater {
     private static void createClassFile(String className, String packageName, String subFolder) throws IOException {
         className = className.replace("\n", "");
         className = className.replaceAll("\\.", "");
-        className = className.replaceAll(" ", "_");
 
         if ("".equals(subFolder)) {
+            className = className.replaceAll(" ", "_");
             subFolder = getSubFolder(className);
+            className = UNDER_SCORE + className;
         }
 
-        className = UNDER_SCORE + className;
-        String javaClassName = className + ".java";
+        className = className.replaceAll(" ", "");
 
-        System.out.println(className);
+        String javaClassName = className + ".java";
+        System.out.println(javaClassName);
 
         Path folderPath =
                 Paths.get("").resolve(SRC_MAIN_JAVA).resolve(packageName).resolve(subFolder);
