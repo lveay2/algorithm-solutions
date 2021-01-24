@@ -18,37 +18,50 @@ public class ClassNameFormater {
 
     private static String packageName = null;
     private static String subFolder = null;
+    private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "Tasks Scheduling";
+        String className = "981. Time Based Key-Value Store\n";
 
-//        packageName = PACKAGE_LEETCODE;
-//        subFolder = "";
+        packageName = PACKAGE_LEETCODE;
+        subFolder = "";
+        createClassFile(className, packageName, subFolder, true);
 
-//        packageName = PACKAGE_LINTCODE;
-//        subFolder = "dynamic_programming";
+        packageName = PACKAGE_LINTCODE;
+        subFolder = "dynamic_programming";
 //        subFolder = "dfs";
 //        subFolder = "bfs";
 //        subFolder = "system_design";
 //        subFolder = "_100_good_problems";
 //        subFolder = "two_pointers";
 //        subFolder = "fb";
+//        createClassFile(className, packageName, subFolder, create);
 
         packageName = PACKAGE_EDUCATIVE;
 //        subFolder = "dynamic_programming";
         subFolder = "topological_sort";
-
-        createClassFile(className, packageName, subFolder);
+//        createClassFile(className, packageName, subFolder, create);
     }
 
-    private static void createClassFile(String className, String packageName, String subFolder) throws IOException {
+    private static void createClassFile(String className, String packageName, String subFolder, boolean create) throws IOException {
         className = className.replace("\n", "");
         className = className.replaceAll("\\.", "");
+        className = className.replaceAll("-", "");
+
+        String[] names = className.split(" ");
+        String number = names[0];
+
+        if ("".equals(subFolder) || Character.isDigit(className.charAt(0))) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < names.length; i++) {
+                sb.append(names[i]);
+            }
+
+            className = UNDER_SCORE + number + UNDER_SCORE + sb.toString();
+        }
 
         if ("".equals(subFolder)) {
-            className = className.replaceAll(" ", "_");
-            subFolder = getSubFolder(className);
-            className = UNDER_SCORE + className;
+            subFolder = getSubFolder(number);
         }
 
         className = className.replaceAll(" ", "");
@@ -59,27 +72,30 @@ public class ClassNameFormater {
         Path folderPath =
                 Paths.get("").resolve(SRC_MAIN_JAVA).resolve(packageName).resolve(subFolder);
         System.out.println(folderPath);
-        Files.createDirectories(folderPath);
-        Path filePath = folderPath.resolve(javaClassName);
 
-        List<String> contents =
-                Arrays.asList(
-                        "package " + packageName + "." + subFolder + ";\n",
-                        "public class " + className + " {\n\n\n",
-                        "    public static void main(String[] args) {",
-                        "      ",
-                        "    }",
-                        "}");
+        if (create) {
+            Files.createDirectories(folderPath);
+            Path filePath = folderPath.resolve(javaClassName);
 
-        Files.write(
-                Paths.get(filePath.toFile().getAbsolutePath()),
-                contents,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.TRUNCATE_EXISTING);
+            List<String> contents =
+                    Arrays.asList(
+                            "package " + packageName + "." + subFolder + ";\n",
+                            "public class " + className + " {\n\n\n",
+                            "    public static void main(String[] args) {",
+                            "      ",
+                            "    }",
+                            "}");
+
+            Files.write(
+                    Paths.get(filePath.toFile().getAbsolutePath()),
+                    contents,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING);
+        }
     }
 
-    private static String getSubFolder(String className) {
-        int num = Integer.parseInt(className.split("_")[0]);
+    private static String getSubFolder(String number) {
+        int num = Integer.parseInt(number);
         int folderStart;
         if (num % 100 == 0) {
             folderStart = num - 100;
