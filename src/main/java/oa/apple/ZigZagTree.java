@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Queue;
 
 /**
+ * Print a tree in zig-zag form, for example:
  *
+ *     1
+ *    /| \
+ *   2 3  4
+ *  /  |  | \
+ * 5   6  7  8
  *
  */
 public class ZigZagTree {
