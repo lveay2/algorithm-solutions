@@ -36,6 +36,8 @@ import java.util.*;
  * * tsconfig.json
  * * index.html
  *
+ *  Follow up question 2: use Node class
+ *
  */
 public class DirectoryStructure {
 
