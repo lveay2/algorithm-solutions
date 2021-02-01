@@ -40,7 +40,7 @@ import java.util.Arrays;
  */
 public class ShoppingOptions {
 
-    private static int getOptions(int[] a, int[] b, int[] c, int[] d, int dollars) {
+    private static int numberOfOptions(int[] a, int[] b, int[] c, int[] d, int dollars) {
         int longest = Math.max(a.length, Math.max(b.length, Math.max(c.length, d.length)));
 
         if (d.length == longest) {
@@ -83,7 +83,6 @@ public class ShoppingOptions {
             }
         }
 
-
         int abcIndex = 0;
         int[] abcSum = new int[index * c.length];
         for (int i = 0; i < index; i++) {
@@ -98,6 +97,8 @@ public class ShoppingOptions {
 
                 if (abSum[i] + ci < dollars) {
                     abcSum[abcIndex++] = abSum[i] + ci;
+                } else {
+                    break;
                 }
             }
         }
@@ -121,14 +122,14 @@ public class ShoppingOptions {
     }
 
     public static void main(String[] args) {
-        System.out.println(getOptions(new int[]{2, 3}, new int[]{4}, new int[]{2, 3}, new int[]{1, 2}, 10) == 4);
-        System.out.println(getOptions(new int[]{2, 3}, new int[]{4}, new int[]{2, 3}, new int[]{1, 2}, 9) == 1);
-        System.out.println(getOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 12) == 4);
-        System.out.println(getOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 13) == 8);
-        System.out.println(getOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 14) == 12);
-        System.out.println(getOptions(new int[]{100}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 99) == 0);
-        System.out.println(getOptions(new int[]{1}, new int[]{1}, new int[]{1}, new int[]{1}, 4) == 1);
-        System.out.println(getOptions(new int[]{1}, new int[]{1}, new int[]{1}, new int[]{1}, 3) == 0);
+        System.out.println(numberOfOptions(new int[]{2, 3}, new int[]{4}, new int[]{2, 3}, new int[]{1, 2}, 10) == 4);
+        System.out.println(numberOfOptions(new int[]{2, 3}, new int[]{4}, new int[]{2, 3}, new int[]{1, 2}, 9) == 1);
+        System.out.println(numberOfOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 12) == 4);
+        System.out.println(numberOfOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 13) == 8);
+        System.out.println(numberOfOptions(new int[]{6}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 14) == 12);
+        System.out.println(numberOfOptions(new int[]{100}, new int[]{1, 1, 1, 1}, new int[]{4, 5, 6}, new int[]{1}, 99) == 0);
+        System.out.println(numberOfOptions(new int[]{1}, new int[]{1}, new int[]{1}, new int[]{1}, 4) == 1);
+        System.out.println(numberOfOptions(new int[]{1}, new int[]{1}, new int[]{1}, new int[]{1}, 3) == 0);
     }
 
 }
