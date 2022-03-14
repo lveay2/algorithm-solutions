@@ -1,4 +1,4 @@
-package leetcode._680_valid_palindrome_ii;
+package leetcode._601_700._680_valid_palindrome_ii;
 
 /**
  * Given a non-empty string s, you may delete at most one character. Judge whether you can make it a palindrome.

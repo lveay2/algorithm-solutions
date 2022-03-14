@@ -21,7 +21,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "981. Time Based Key-Value Store\n";
+        String className = "46. Permutations\n";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
