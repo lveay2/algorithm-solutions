@@ -39,22 +39,15 @@ public class Subsets {
         }
 
         Arrays.sort(nums);
-
         Queue<List<Integer>> queue = new LinkedList<>();
-
         queue.offer(new LinkedList<>());
-
         while (!queue.isEmpty()) {
             List<Integer> subset = queue.poll();
-
             r.add(subset);
-
             for (int i = 0; i < nums.length; i++) {
                 if (subset.size() == 0 || subset.get(subset.size() - 1) < nums[i]) {
                     List<Integer> nextSubset = new LinkedList<>(subset);
-
                     nextSubset.add(nums[i]);
-
                     queue.offer(nextSubset);
                 }
             }
@@ -72,22 +65,15 @@ public class Subsets {
         }
 
         Arrays.sort(nums);
-
         Queue<TreeSet<Integer>> queue = new LinkedList<>();
-
         queue.offer(new TreeSet<>());
-
         while (!queue.isEmpty()) {
             TreeSet<Integer> subset = queue.poll();
-
             r.add(new LinkedList<>(subset));
-
             for (int i = 0; i < nums.length; i++) {
                 if (subset.size() == 0 || subset.last() < nums[i]) {
                     TreeSet<Integer> nextSubset = new TreeSet<>(subset);
-
                     nextSubset.add(nums[i]);
-
                     queue.offer(nextSubset);
                 }
             }
