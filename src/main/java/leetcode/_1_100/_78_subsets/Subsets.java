@@ -27,7 +27,7 @@ public class Subsets {
 
     public static void main(String[] args) {
         System.out.println(new Subsets().subsets(new int[]{1, 2, 3}));
-        System.out.println(new Subsets().subsets2(new int[]{1, 2, 3}));
+        System.out.println(new Subsets().subsets2(new int[]{1, 5, 3}));
     }
 
     // BFS LinkedList
@@ -38,7 +38,7 @@ public class Subsets {
             return r;
         }
 
-        Arrays.sort(nums);
+//        Arrays.sort(nums);
         Queue<List<Integer>> queue = new LinkedList<>();
         queue.offer(new LinkedList<>());
         while (!queue.isEmpty()) {
