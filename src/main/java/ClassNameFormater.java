@@ -21,11 +21,11 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "46. Permutations\n";
+        String className = "Evaluate Expression";
 
-        packageName = PACKAGE_LEETCODE;
-        subFolder = "";
-        createClassFile(className, packageName, subFolder, true);
+//        packageName = PACKAGE_LEETCODE;
+//        subFolder = "";
+//        createClassFile(className, packageName, subFolder, true);
 
         packageName = PACKAGE_LINTCODE;
         subFolder = "dynamic_programming";
@@ -39,8 +39,9 @@ public class ClassNameFormater {
 
         packageName = PACKAGE_EDUCATIVE;
 //        subFolder = "dynamic_programming";
-        subFolder = "topological_sort";
-//        createClassFile(className, packageName, subFolder, create);
+//        subFolder = "topological_sort";
+        subFolder = "subsets";
+        createClassFile(className, packageName, subFolder, create);
     }
 
     private static void createClassFile(String className, String packageName, String subFolder, boolean create) throws IOException {
