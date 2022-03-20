@@ -1,18 +1,18 @@
 Web App Controller
 - too many requests coming to one or a few instances
-- not enough computing resouces (number of instances, network bandwidth, cpu, memory, disk)
+- not enough computing resources (number of instances, network bandwidth, cpu, memory, disk)
 - some instances died due to memory leak
 - some instances  died due to disk full (too many logs on disk)
 
 Postgres
 - read timeout: too many read requests has been queued up at the same time
 - too many users not found
-- not enough computing resouces (cpu rate at 100%, memory full, disk storage full)
+- not enough computing resources (cpu rate at 100%, memory full, disk storage full)
 
-Recomandation Serivce
+Recommendation Service
 - timeout too fast before wait enough time
 - user data is not valid
-- machine leanring model crashed
+- machine learning model crashed
 
 redis (cache miss)
 - a lot of requests coming with new users that are not cached with recommendations
