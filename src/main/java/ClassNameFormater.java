@@ -21,7 +21,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "51. N-Queens\n";
+        String className = "200. Number of Islands\n";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";

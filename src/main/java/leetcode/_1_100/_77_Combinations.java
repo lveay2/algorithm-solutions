@@ -41,7 +41,7 @@ public class _77_Combinations {
             return;
         }
 
-        for (int i = first; i < n + 1; i++) {
+        for (int i = first; i <= n; i++) {
             combo.add(i);
             dfs(combo, i + 1, n, k);
             combo.remove(combo.size() - 1);
