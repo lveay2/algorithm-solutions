@@ -37,23 +37,38 @@ public class _200_NumberOfIslands {
 
     public static void main(String[] args) {
         char[][] island1 = {
-                {'1', '1', '1', '1', '0'}, 
-                {'1', '1', '0', '1', '0'}, 
-                {'1', '1', '0', '0', '0'}, 
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '0', '1', '0'},
+                {'1', '1', '0', '0', '0'},
                 {'0', '0', '0', '0', '0'}
         };
         System.out.println("1 == " + numIslands(island1));
-
         char[][] island2 = {
-                {'1', '1', '0', '0', '0'}, 
-                {'1', '1', '0', '0', '0'}, 
-                {'0', '0', '1', '0', '0'}, 
+                {'1', '1', '0', '0', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '1', '0', '0'},
                 {'0', '0', '0', '1', '1'}
         };
         System.out.println("3 == " + numIslands(island2));
-
         char[][] island3 = {{'1', '1'}};
         System.out.println("1 == " + numIslands(island3));
+
+        char[][] island11 = {
+                {'1', '1', '1', '1', '0'},
+                {'1', '1', '0', '1', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '0', '0', '0'}
+        };
+        System.out.println("1 == " + numIslandsDfs(island11));
+        char[][] island22 = {
+                {'1', '1', '0', '0', '0'},
+                {'1', '1', '0', '0', '0'},
+                {'0', '0', '1', '0', '0'},
+                {'0', '0', '0', '1', '1'}
+        };
+        System.out.println("3 == " + numIslandsDfs(island22));
+        char[][] island33 = {{'1', '1'}};
+        System.out.println("1 == " + numIslandsDfs(island33));
     }
 
     public static int numIslands(char[][] grid) {
@@ -115,9 +130,46 @@ public class _200_NumberOfIslands {
 
     static class Coordinate {
         int x, y;
+
         public Coordinate(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
+
+    public static int numIslandsDfs(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int ans = 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    dfs(grid, i, j);
+                    ans++;
+                }
+            }
+        }
+
+        return ans;
+    }
+
+    private static void dfs(char[][] grid, int i, int j) {
+        int m = grid.length;
+        int n = grid[0].length;
+        if (i < 0 || i >= m || j < 0 || j >= n) {
+            return;
+        }
+
+        if (grid[i][j] == '0') {
+            return;
+        }
+
+        grid[i][j] = '0';
+        dfs(grid, i, j + 1);
+        dfs(grid, i, j - 1);
+        dfs(grid, i - 1, j);
+        dfs(grid, i + 1, j);
+    }
+
 }
