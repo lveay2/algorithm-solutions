@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ClassNameFormater {
 
@@ -21,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "1254. Number of Closed Islands\n";
+        String className = "1018. Binary Prefix Divisible By 5\n";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
@@ -55,7 +56,7 @@ public class ClassNameFormater {
         if ("".equals(subFolder) || Character.isDigit(className.charAt(0))) {
             StringBuilder sb = new StringBuilder();
             for (int i = 1; i < names.length; i++) {
-                sb.append(names[i]);
+                sb.append(names[i].substring(0,1).toUpperCase(Locale.ROOT) + names[i].substring(1));
             }
 
             className = UNDER_SCORE + number + UNDER_SCORE + sb.toString();
