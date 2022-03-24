@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "1018. Binary Prefix Divisible By 5\n";
+        String className = "695. Max Area of Island\n";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
@@ -82,10 +82,10 @@ public class ClassNameFormater {
             List<String> contents =
                     Arrays.asList(
                             "package " + packageName + "." + subFolder + ";\n",
-                            "public class " + className + " {\n\n\n",
+                            "public class " + className + " {\n",
                             "    public static void main(String[] args) {",
                             "      ",
-                            "    }",
+                            "    }\n\n",
                             "}");
 
             Files.write(
