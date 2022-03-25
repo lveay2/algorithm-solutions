@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "1288. Remove Covered Intervals\n";
+        String className = "986. Interval List Intersections";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
