@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "241. Different Ways to Add Parentheses\n";
+        String className = "1288. Remove Covered Intervals\n";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
