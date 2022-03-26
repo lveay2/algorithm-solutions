@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "986. Interval List Intersections";
+        String className = "1905. Count Sub Islands";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
@@ -82,6 +82,7 @@ public class ClassNameFormater {
             List<String> contents =
                     Arrays.asList(
                             "package " + packageName + "." + subFolder + ";\n",
+                            "/*",
                             "public class " + className + " {\n",
                             "    public static void main(String[] args) {",
                             "      ",
