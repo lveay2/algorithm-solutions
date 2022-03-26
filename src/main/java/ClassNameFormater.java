@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "47. Permutations II";
+        String className = "39. Combination Sum";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
