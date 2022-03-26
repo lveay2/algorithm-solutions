@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "90. Subsets II";
+        String className = "78. Subsets";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
