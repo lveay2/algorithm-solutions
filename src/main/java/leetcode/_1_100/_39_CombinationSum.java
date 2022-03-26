@@ -49,18 +49,16 @@ public class _39_CombinationSum {
 
     static List<List<Integer>> result;
     static List<Integer> combo;
+    static int sum;
     public static List<List<Integer>> combinationSum(int[] candidates, int target) {
         result = new ArrayList<>();
         combo = new ArrayList<>();
+        sum = 0;
         dfs(combo, candidates, 0, target);
         return result;
     }
 
     private static void dfs(List<Integer> combo, int[] nums, int start, int target) {
-        int sum = 0;
-        for (int n: combo) {
-            sum += n;
-        }
         if (sum == target) {
             result.add(new ArrayList<>(combo));
             return;
@@ -71,8 +69,10 @@ public class _39_CombinationSum {
 
         for (int i = start; i < nums.length; i++) {
             combo.add(nums[i]);
+            sum += nums[i];
             dfs(combo, nums, i, target);
             combo.remove(combo.size() - 1);
+            sum -= nums[i];
         }
     }
 
