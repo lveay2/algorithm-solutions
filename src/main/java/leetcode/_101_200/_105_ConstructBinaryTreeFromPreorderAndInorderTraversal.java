@@ -34,8 +34,8 @@ public class _105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
     }
 
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        return helper(preorder, 0, preorder.length,
-                inorder, 0, inorder.length);
+        return helper(preorder, 0, preorder.length - 1,
+                inorder, 0, inorder.length - 1);
     }
 
     private static TreeNode helper(int[] preorder, int preStart, int preEnd,
@@ -58,7 +58,7 @@ public class _105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
         root.left = helper(preorder, preStart + 1, preStart + leftSize,
                 inorder, inStart, index - 1);
-        root.right = helper(preorder, preEnd + leftSize + 1, preEnd,
+        root.right = helper(preorder, preStart + leftSize + 1, preEnd,
                 inorder, index + 1, inEnd);
 
         return root;
