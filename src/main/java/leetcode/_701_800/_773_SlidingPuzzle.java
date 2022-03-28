@@ -1,9 +1,6 @@
 package leetcode._701_800;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 /*
 773. Sliding Puzzle
@@ -64,9 +61,9 @@ public class _773_SlidingPuzzle {
     public static int slidingPuzzle(int[][] board) {
         String target = "123450";
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                sb.append(board[i][j]);
+        for (int[] row : board) {
+            for (int col: row) {
+                sb.append(col);
             }
         }
         String startBoard = sb.toString();
@@ -93,11 +90,11 @@ public class _773_SlidingPuzzle {
             for (int i = 0; i < n; i++) {
                 String current = queue.poll();
 
-                if (current.equals(target)) {
+                if (target.equals(current)) {
                     return ans;
                 }
 
-                int index = current.indexOf('0');
+                int index = Objects.requireNonNull(current).indexOf('0');
                 for (int adj : neighbors[index]) {
                     String newBoard = swap(current.toCharArray(), adj, index);
                     if (!visited.contains(newBoard)) {
