@@ -1,7 +1,6 @@
 package leetcode._101_200;
 
-import java.util.ArrayList;
-import java.util.List;
+import common.TreeNode;
 
 /*
 105. Construct Binary Tree from Preorder and Inorder Traversal
@@ -30,16 +29,17 @@ inorder is guaranteed to be the inorder traversal of the tree.
 public class _105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
     public static void main(String[] args) {
-        System.out.println(buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7}));
+        TreeNode root = buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7});
+        System.out.println("[3, 9, 20, 15, 7] == " + root.printTreeInPreorder());
     }
 
     public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        return helper(preorder, 0, preorder.length - 1,
+        return dfs(preorder, 0, preorder.length - 1,
                 inorder, 0, inorder.length - 1);
     }
 
-    private static TreeNode helper(int[] preorder, int preStart, int preEnd,
-                                   int[] inorder, int inStart, int inEnd) {
+    private static TreeNode dfs(int[] preorder, int preStart, int preEnd,
+                                int[] inorder, int inStart, int inEnd) {
         if (preStart > preEnd) {
             return null;
         }
@@ -56,48 +56,13 @@ public class _105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
         }
         int leftSize = index - inStart;
 
-        root.left = helper(preorder, preStart + 1, preStart + leftSize,
+        root.left = dfs(preorder, preStart + 1, preStart + leftSize,
                 inorder, inStart, index - 1);
-        root.right = helper(preorder, preStart + leftSize + 1, preEnd,
+        root.right = dfs(preorder, preStart + leftSize + 1, preEnd,
                 inorder, index + 1, inEnd);
 
         return root;
     }
 
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {
-        }
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-
-        List<Integer> values = new ArrayList<>();
-
-        @Override
-        public String toString() {
-            dfs(this);
-            return values.toString();
-        }
-
-        private void dfs(TreeNode root) {
-            if (root == null) {
-                return;
-            }
-            values.add(root.val);
-            dfs(root.left);
-            dfs(root.right);
-        }
-    }
 }
 

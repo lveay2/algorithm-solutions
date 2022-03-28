@@ -1,6 +1,8 @@
 package common;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class TreeNode {
@@ -72,6 +74,21 @@ public class TreeNode {
     public String toString() {
         printLevelOrder();
         return "";
+    }
+
+    List<Integer> values = new ArrayList<>();
+    public String printTreeInPreorder() {
+        dfs(this);
+        return values.toString();
+    }
+
+    private void dfs(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        values.add(root.val);
+        dfs(root.left);
+        dfs(root.right);
     }
 
 }
