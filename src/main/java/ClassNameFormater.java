@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "230. Kth Smallest Element in a BST";
+        String className = "104. Maximum Depth of Binary Tree";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
