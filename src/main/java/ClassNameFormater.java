@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "144. Binary Tree Preorder Traversal";
+        String className = "543. Diameter of Binary Tree";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
