@@ -70,13 +70,16 @@ public class _139_WordBreak {
 //                    + (end <= s.length() ? s.substring(start, end) : " ") + " "
 //                    + (end <= s.length() ? s.substring(end) : " "));
 //            System.out.println(Arrays.deepToString(memo));
-            if (end <= s.length() && s.substring(start, end).equals(word)
-                    && dfs(s, words, end, memo)) {
-                memo[start] = true;
-                return true;
+            if (end <= s.length() && s.substring(start, end).equals(word)) {
+                if (dfs(s, words, end, memo)) {
+                    memo[start] = true;
+//                    System.out.println(Arrays.deepToString(memo));
+                    return true;
+                }
             }
         }
         memo[start] = false;
+//        System.out.println(Arrays.deepToString(memo));
         return false;
     }
 
