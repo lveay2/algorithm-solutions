@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class ClassNameFormater {
+public class ClassFileGenerator {
 
     private static final String SRC_MAIN_JAVA = "src" + File.separator + "main" + File.separator + "java";
     private static final String UNDER_SCORE = "_";
@@ -22,7 +22,7 @@ public class ClassNameFormater {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "139. Word Break\n";
+        String className = "22. Generate Parentheses";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
