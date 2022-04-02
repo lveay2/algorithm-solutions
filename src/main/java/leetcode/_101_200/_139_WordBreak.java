@@ -59,6 +59,7 @@ public class _139_WordBreak {
             return true;
         }
 
+        // memo[start] store the result of dfs from s.substring(start)
         if (memo[start] != null) {
             return memo[start];
         }
