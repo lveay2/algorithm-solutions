@@ -27,25 +27,25 @@ public class ClassFileGenerator {
 
   // example className: 1495 · Leaf-Similar Trees
   private static void createLintCodeProblemFile(String problemName) {
-    String subFolder = "dfs";
-    //        subFolder = "bfs";
-    //        subFolder = "system_design";
-    //        subFolder = "_100_good_problems";
-    //        subFolder = "two_pointers";
-    //        subFolder = "fb";
-    createClassFile(problemName, PACKAGE_LINTCODE, subFolder, false);
+    String parentFolder = "dfs";
+    //    parentFolder = "bfs";
+    //    parentFolder = "system_design";
+    //    parentFolder = "_100_good_problems";
+    //    parentFolder = "two_pointers";
+    //    parentFolder = "fb";
+    createClassFile(problemName, PACKAGE_LINTCODE, parentFolder, false);
   }
 
   // example className: Maximum Sum Subarray of Size K (easy)
   private static void createEducativeProblemFile(String problemName) {
-    String subFolder = "dynamic_programming";
-    //            subFolder = "topological_sort";
-    //            subFolder = "subsets";
-    createClassFile(problemName, PACKAGE_EDUCATIVE, subFolder, false);
+    String parentFolder = "dynamic_programming";
+    //    parentFolder = "topological_sort";
+    //    parentFolder = "subsets";
+    createClassFile(problemName, PACKAGE_EDUCATIVE, parentFolder, false);
   }
 
   private static void createClassFile(
-      String rawName, String packageName, String subFolder, boolean createNow) {
+      String rawName, String packageName, String parentFolder, boolean createNow) {
     rawName = rawName.replaceAll("\n", "").replaceAll("-", " ");
 
     String[] names = rawName.split(" ");
@@ -58,13 +58,14 @@ public class ClassFileGenerator {
             : problemName;
     System.out.println("classFileName: " + classFileName + Constants.JAVA);
 
-    subFolder = ClassFileGeneratorHelper.getSubFolder(subFolder, number);
+    parentFolder = ClassFileGeneratorHelper.getParentFolder(parentFolder, number);
     Path folderPath =
-        Paths.get("").resolve(Constants.SRC_MAIN_JAVA).resolve(packageName).resolve(subFolder);
+        Paths.get("").resolve(Constants.SRC_MAIN_JAVA).resolve(packageName).resolve(parentFolder);
     System.out.println("folderPath: " + folderPath + "\n");
 
     if (createNow) {
-      ClassFileGeneratorHelper.createProblemFile(folderPath, packageName, subFolder, classFileName);
+      ClassFileGeneratorHelper.createProblemFile(
+          folderPath, packageName, parentFolder, classFileName);
     }
   }
 }

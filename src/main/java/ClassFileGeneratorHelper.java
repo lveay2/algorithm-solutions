@@ -68,9 +68,9 @@ public class ClassFileGeneratorHelper {
     }
   }
 
-  public static String getSubFolder(String subFolder, int num) {
-    if (!"".equals(subFolder)) {
-      return subFolder;
+  public static String getParentFolder(String parentFolder, int num) {
+    if (!"".equals(parentFolder)) {
+      return parentFolder;
     }
 
     int folderStart;
@@ -83,8 +83,8 @@ public class ClassFileGeneratorHelper {
         Arrays.asList(
             String.valueOf(folderStart == 0 ? 1 : folderStart + 1),
             String.valueOf(folderStart == 0 ? 100 : folderStart + 100));
-    subFolder = Constants.UNDER_SCORE + String.join(Constants.UNDER_SCORE, folders);
-    System.out.println("subFolder: " + subFolder);
-    return subFolder;
+    parentFolder = Constants.UNDER_SCORE + String.join(Constants.UNDER_SCORE, folders);
+    System.out.println("parentFolder: " + parentFolder);
+    return parentFolder;
   }
 }
