@@ -15,36 +15,35 @@ package lintcode.dynamic_programming;
  * <p>Input: [[14,2,11],[11,14,5],[14,3,10]] Output: 10 Explanation: Paint house 0 into blue, paint
  * house 1 into green, paint house 2 into blue. Minimum cost: 2 + 5 + 3 = 10.
  *
- * Example 2:
+ * <p>Example 2:
  *
  * <p>Input: [[1,2,3],[1,4,6]] Output: 3
  *
- * 注意事项 All costs are positive integers.
+ * <p>注意事项 All costs are positive integers.
  */
 public class _515_minCost {
 
-    public static int minCost(int[][] costs) {
-        if (costs == null || costs.length == 0 || costs[0].length == 0) {
-            return 0;
-        }
-
-        int l = costs.length;
-        int[][] dp = new int[l][3];
-        dp[0][0] = costs[0][0];
-        dp[0][1] = costs[0][1];
-        dp[0][2] = costs[0][2];
-
-        for (int i = 1; i < l; i++) {
-            dp[i][0] = Math.min(dp[i - 1][1], dp[i - 1][2]) + costs[i][0];
-            dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][2]) + costs[i][1];
-            dp[i][2] = Math.min(dp[i - 1][1], dp[i - 1][0]) + costs[i][2];
-        }
-
-        return Math.min(dp[l - 1][0], Math.min(dp[l - 1][1], dp[l - 1][2]));
+  public static int minCost(int[][] costs) {
+    if (costs == null || costs.length == 0 || costs[0].length == 0) {
+      return 0;
     }
 
-    public static void main(String[] args) {
-        System.out.println(minCost(new int[][]{{14, 2, 11}, {11, 14, 5}, {14, 3, 10}}));
+    int l = costs.length;
+    int[][] dp = new int[l][3];
+    dp[0][0] = costs[0][0];
+    dp[0][1] = costs[0][1];
+    dp[0][2] = costs[0][2];
+
+    for (int i = 1; i < l; i++) {
+      dp[i][0] = Math.min(dp[i - 1][1], dp[i - 1][2]) + costs[i][0];
+      dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][2]) + costs[i][1];
+      dp[i][2] = Math.min(dp[i - 1][1], dp[i - 1][0]) + costs[i][2];
     }
 
+    return Math.min(dp[l - 1][0], Math.min(dp[l - 1][1], dp[l - 1][2]));
+  }
+
+  public static void main(String[] args) {
+    System.out.println(minCost(new int[][] {{14, 2, 11}, {11, 14, 5}, {14, 3, 10}}));
+  }
 }

@@ -6,128 +6,115 @@ import java.util.List;
 import java.util.Queue;
 
 /**
- * You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the following definition:
+ * You are given a perfect binary tree where all leaves are on the same level, and every parent has
+ * two children. The binary tree has the following definition:
  *
- * struct Node {
- *   int val;
- *   Node *left;
- *   Node *right;
- *   Node *next;
- * }
- * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+ * <p>struct Node { int val; Node *left; Node *right; Node *next; } Populate each next pointer to
+ * point to its next right node. If there is no next right node, the next pointer should be set to
+ * NULL.
  *
- * Initially, all next pointers are set to NULL.
+ * <p>Initially, all next pointers are set to NULL.
  *
- * Example:
- *      1
- *    /   \
- *    2    3
- *   / \   / \
- *  4   5 6   7
+ * <p>Example: 1 / \ 2 3 / \ / \ 4 5 6 7
  *
- *      1
- *    /   \
- *    2 -> 3
- *   / \   / \
- *  4 ->5 6 -> 7
+ * <p>1 / \ 2 -> 3 / \ / \ 4 ->5 6 -> 7
  *
+ * <p>Input:
+ * {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":null,"right":null,"val":4},"next":null,"right":{"$id":"4","left":null,"next":null,"right":null,"val":5},"val":2},"next":null,"right":{"$id":"5","left":{"$id":"6","left":null,"next":null,"right":null,"val":6},"next":null,"right":{"$id":"7","left":null,"next":null,"right":null,"val":7},"val":3},"val":1}
  *
- * Input: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":null,"right":null,"val":4},"next":null,"right":{"$id":"4","left":null,"next":null,"right":null,"val":5},"val":2},"next":null,"right":{"$id":"5","left":{"$id":"6","left":null,"next":null,"right":null,"val":6},"next":null,"right":{"$id":"7","left":null,"next":null,"right":null,"val":7},"val":3},"val":1}
+ * <p>Output:
+ * {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":{"$id":"4","left":null,"next":{"$id":"5","left":null,"next":{"$id":"6","left":null,"next":null,"right":null,"val":7},"right":null,"val":6},"right":null,"val":5},"right":null,"val":4},"next":{"$id":"7","left":{"$ref":"5"},"next":null,"right":{"$ref":"6"},"val":3},"right":{"$ref":"4"},"val":2},"next":null,"right":{"$ref":"7"},"val":1}
  *
- * Output: {"$id":"1","left":{"$id":"2","left":{"$id":"3","left":null,"next":{"$id":"4","left":null,"next":{"$id":"5","left":null,"next":{"$id":"6","left":null,"next":null,"right":null,"val":7},"right":null,"val":6},"right":null,"val":5},"right":null,"val":4},"next":{"$id":"7","left":{"$ref":"5"},"next":null,"right":{"$ref":"6"},"val":3},"right":{"$ref":"4"},"val":2},"next":null,"right":{"$ref":"7"},"val":1}
+ * <p>Explanation: Given the above perfect binary tree (Figure A), your function should populate
+ * each next pointer to point to its next right node, just like in Figure B.
  *
- * Explanation: Given the above perfect binary tree (Figure A), your function should populate each next pointer to point to its next right node, just like in Figure B.
+ * <p>Note:
  *
- *
- * Note:
- *
- * You may only use constant extra space.
- * Recursive approach is fine, implicit stack space does not count as extra space for this problem.
- *
+ * <p>You may only use constant extra space. Recursive approach is fine, implicit stack space does
+ * not count as extra space for this problem.
  */
 public class Connect {
 
-    private static Node deserialize(String str) {
-        if (str == null || str.length() == 0) {
-            return null;
-        }
-
-        String[] trees = str.split(",");
-
-        Queue<Node> queue = new LinkedList<>();
-
-        Node root = new Node(Integer.parseInt(trees[0]));
-
-        queue.offer(root);
-
-        int l = trees.length;
-
-        int n = 0;
-
-        while (!queue.isEmpty() && n < l) {
-            Node head = queue.poll();
-
-            n++;
-
-            if (n < l && !trees[n].equals("null")) {
-                Node left = new Node(Integer.parseInt(trees[n]));
-
-                queue.offer(left);
-
-                head.left = left;
-            }
-
-            n++;
-
-            if (n < l && !trees[n].equals("null")) {
-                Node right = new Node(Integer.parseInt(trees[n]));
-
-                queue.offer(right);
-
-                head.right = right;
-            }
-        }
-
-        return root;
+  private static Node deserialize(String str) {
+    if (str == null || str.length() == 0) {
+      return null;
     }
 
-    public static void main(String[] args) {
-        new Connect().connect(deserialize("1,2,3,4,5,6,7"));
+    String[] trees = str.split(",");
+
+    Queue<Node> queue = new LinkedList<>();
+
+    Node root = new Node(Integer.parseInt(trees[0]));
+
+    queue.offer(root);
+
+    int l = trees.length;
+
+    int n = 0;
+
+    while (!queue.isEmpty() && n < l) {
+      Node head = queue.poll();
+
+      n++;
+
+      if (n < l && !trees[n].equals("null")) {
+        Node left = new Node(Integer.parseInt(trees[n]));
+
+        queue.offer(left);
+
+        head.left = left;
+      }
+
+      n++;
+
+      if (n < l && !trees[n].equals("null")) {
+        Node right = new Node(Integer.parseInt(trees[n]));
+
+        queue.offer(right);
+
+        head.right = right;
+      }
     }
 
-    public Node connect(Node root) {
-        List<List<String>> print = new ArrayList<>();
+    return root;
+  }
 
-        if (root == null) {
-            return null;
-        }
+  public static void main(String[] args) {
+    new Connect().connect(deserialize("1,2,3,4,5,6,7"));
+  }
 
-        Queue<Node> queue = new LinkedList<>();
+  public Node connect(Node root) {
+    List<List<String>> print = new ArrayList<>();
 
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-
-            int size = queue.size();
-
-            for (int i = 0; i < size; i++) {
-                Node head = queue.poll();
-
-                if (i + 1 < size) {
-                    head.next = queue.peek();
-                }
-
-                if (head.left != null) {
-                    queue.offer(head.left);
-                }
-
-                if (head.right != null) {
-                    queue.offer(head.right);
-                }
-            }
-        }
-
-        return root;
+    if (root == null) {
+      return null;
     }
 
+    Queue<Node> queue = new LinkedList<>();
+
+    queue.offer(root);
+
+    while (!queue.isEmpty()) {
+
+      int size = queue.size();
+
+      for (int i = 0; i < size; i++) {
+        Node head = queue.poll();
+
+        if (i + 1 < size) {
+          head.next = queue.peek();
+        }
+
+        if (head.left != null) {
+          queue.offer(head.left);
+        }
+
+        if (head.right != null) {
+          queue.offer(head.right);
+        }
+      }
+    }
+
+    return root;
+  }
 }

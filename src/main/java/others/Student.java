@@ -1,5 +1,3 @@
 package others;
 
-public class Student {
-
-}
+public class Student {}

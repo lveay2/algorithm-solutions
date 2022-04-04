@@ -41,39 +41,40 @@ All elements of candidates are distinct.
  */
 public class _39_CombinationSum {
 
-    public static void main(String[] args) {
-        System.out.println("[[2, 2, 3], [7]] ==\n" + combinationSum(new int[]{2,3,6,7}, 7));
-        System.out.println("[[2, 2, 2, 2], [2, 3, 3], [3, 5]] ==\n" + combinationSum(new int[]{2,3,5}, 8));
-        System.out.println("[] == " + combinationSum(new int[]{2}, 1));
+  static List<List<Integer>> result;
+  static List<Integer> combo;
+  static int sum;
+
+  public static void main(String[] args) {
+    System.out.println("[[2, 2, 3], [7]] ==\n" + combinationSum(new int[] {2, 3, 6, 7}, 7));
+    System.out.println(
+        "[[2, 2, 2, 2], [2, 3, 3], [3, 5]] ==\n" + combinationSum(new int[] {2, 3, 5}, 8));
+    System.out.println("[] == " + combinationSum(new int[] {2}, 1));
+  }
+
+  public static List<List<Integer>> combinationSum(int[] candidates, int target) {
+    result = new ArrayList<>();
+    combo = new ArrayList<>();
+    sum = 0;
+    dfs(combo, candidates, 0, target);
+    return result;
+  }
+
+  private static void dfs(List<Integer> combo, int[] nums, int start, int target) {
+    if (sum == target) {
+      result.add(new ArrayList<>(combo));
+      return;
+    }
+    if (sum > target) {
+      return;
     }
 
-    static List<List<Integer>> result;
-    static List<Integer> combo;
-    static int sum;
-    public static List<List<Integer>> combinationSum(int[] candidates, int target) {
-        result = new ArrayList<>();
-        combo = new ArrayList<>();
-        sum = 0;
-        dfs(combo, candidates, 0, target);
-        return result;
+    for (int i = start; i < nums.length; i++) {
+      combo.add(nums[i]);
+      sum += nums[i];
+      dfs(combo, nums, i, target);
+      combo.remove(combo.size() - 1);
+      sum -= nums[i];
     }
-
-    private static void dfs(List<Integer> combo, int[] nums, int start, int target) {
-        if (sum == target) {
-            result.add(new ArrayList<>(combo));
-            return;
-        }
-        if (sum > target) {
-            return;
-        }
-
-        for (int i = start; i < nums.length; i++) {
-            combo.add(nums[i]);
-            sum += nums[i];
-            dfs(combo, nums, i, target);
-            combo.remove(combo.size() - 1);
-            sum -= nums[i];
-        }
-    }
-
+  }
 }

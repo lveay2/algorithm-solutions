@@ -9,39 +9,38 @@ package lintcode.twopointers;
  *
  * <p>Input : [4,4,6,1,1,4,2,5] Output : 6
  *
- * 注意事项 You may not engage in multiple transactions at the
- * same time (ie, you must sell the stock before you buy again).
+ * <p>注意事项 You may not engage in multiple transactions at the same time (ie, you must sell the stock
+ * before you buy again).
  */
 public class _151_Best_Time_to_Buy_and_Sell_Stock_III {
 
-    public static int maxProfit(int[] prices) {
-        int n = prices.length;
-        int totalCost = 0;
+  public static int maxProfit(int[] prices) {
+    int n = prices.length;
+    int totalCost = 0;
 
-        for (int i = 0; i < n; i++) {
-            int leftCost = getCost(prices, 0, i);
-            int rightCost = getCost(prices, i, n);
+    for (int i = 0; i < n; i++) {
+      int leftCost = getCost(prices, 0, i);
+      int rightCost = getCost(prices, i, n);
 
-            totalCost = Math.max(totalCost, leftCost + rightCost);
-        }
-
-        return totalCost;
+      totalCost = Math.max(totalCost, leftCost + rightCost);
     }
 
-    private static int getCost(int[] prices, int i, int j) {
-        int min = Integer.MAX_VALUE;
-        int cost = 0;
-        while (i < j) {
-            min = Math.min(min, prices[i]);
-            cost = Math.max(cost, prices[i] - min);
-            i++;
-        }
+    return totalCost;
+  }
 
-        return cost;
+  private static int getCost(int[] prices, int i, int j) {
+    int min = Integer.MAX_VALUE;
+    int cost = 0;
+    while (i < j) {
+      min = Math.min(min, prices[i]);
+      cost = Math.max(cost, prices[i] - min);
+      i++;
     }
 
-    public static void main(String[] args) {
-        System.out.println(maxProfit(new int[]{4, 4, 6, 1, 1, 4, 2, 5}));
-    }
+    return cost;
+  }
 
+  public static void main(String[] args) {
+    System.out.println(maxProfit(new int[] {4, 4, 6, 1, 1, 4, 2, 5}));
+  }
 }

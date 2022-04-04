@@ -28,22 +28,22 @@ nums[i] is either 0 or 1.
 */
 public class _1018_BinaryPrefixDivisibleBy5 {
 
-    public static void main(String[] args) {
-        System.out.println("[true, false, false] == \n" + prefixesDivBy5(new int[]{0, 1, 1}));
-        System.out.println("[false, false, false] == \n" + prefixesDivBy5(new int[]{1, 1, 1}));
-        System.out.println("[true, false, false, false, true, false] == \n"
-                + prefixesDivBy5(new int[]{0, 1, 1, 1, 1, 1}));
+  public static void main(String[] args) {
+    System.out.println("[true, false, false] == \n" + prefixesDivBy5(new int[] {0, 1, 1}));
+    System.out.println("[false, false, false] == \n" + prefixesDivBy5(new int[] {1, 1, 1}));
+    System.out.println(
+        "[true, false, false, false, true, false] == \n"
+            + prefixesDivBy5(new int[] {0, 1, 1, 1, 1, 1}));
+  }
+
+  public static List<Boolean> prefixesDivBy5(int[] A) {
+    List<Boolean> res = new ArrayList<>();
+    int num = 0;
+    for (int a : A) {
+      num = (num << 1) % 10 + a;
+      res.add(num == 0 || num == 5);
     }
 
-    public static List<Boolean> prefixesDivBy5(int[] A) {
-        List<Boolean> res = new ArrayList<>();
-        int num = 0;
-        for (int a : A) {
-            num = (num << 1) % 10 + a;
-            res.add(num == 0 || num == 5);
-        }
-
-        return res;
-    }
-
+    return res;
+  }
 }

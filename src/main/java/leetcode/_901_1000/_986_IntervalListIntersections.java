@@ -39,40 +39,43 @@ endj < startj+1
  */
 public class _986_IntervalListIntersections {
 
-    public static void main(String[] args) {
-        System.out.println("[[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]] == \n"
-                + Arrays.deepToString(intervalIntersection(
-                new int[][]{{0, 2}, {5, 10}, {13, 23}, {24, 25}},
-                new int[][]{{1, 5}, {8, 12}, {15, 24}, {25, 26}})));
+  public static void main(String[] args) {
+    System.out.println(
+        "[[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]] == \n"
+            + Arrays.deepToString(
+                intervalIntersection(
+                    new int[][] {{0, 2}, {5, 10}, {13, 23}, {24, 25}},
+                    new int[][] {{1, 5}, {8, 12}, {15, 24}, {25, 26}})));
 
-        System.out.println("[] == " + Arrays.deepToString(
-                intervalIntersection(new int[][]{{1, 3}, {5, 9}}, new int[0][0])));
+    System.out.println(
+        "[] == "
+            + Arrays.deepToString(
+                intervalIntersection(new int[][] {{1, 3}, {5, 9}}, new int[0][0])));
+  }
+
+  public static int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
+    int m = firstList.length;
+    int n = secondList.length;
+    List<int[]> ans = new ArrayList<>();
+
+    int i = 0, j = 0;
+    while (i < m && j < n) {
+      int a1 = firstList[i][0], a2 = firstList[i][1];
+      int b1 = secondList[j][0], b2 = secondList[j][1];
+
+      if (b2 >= a1 && a2 >= b1) {
+        int start = Math.max(a1, b1);
+        int end = Math.min(a2, b2);
+        ans.add(new int[] {start, end});
+      }
+
+      if (a2 > b2) {
+        j++;
+      } else {
+        i++;
+      }
     }
 
-    public static int[][] intervalIntersection(int[][] firstList, int[][] secondList) {
-        int m = firstList.length;
-        int n = secondList.length;
-        List<int[]> ans = new ArrayList<>();
-
-        int i = 0, j = 0;
-        while (i < m && j < n) {
-            int a1 = firstList[i][0], a2 = firstList[i][1];
-            int b1 = secondList[j][0], b2 = secondList[j][1];
-
-            if (b2 >= a1 && a2 >= b1) {
-                int start = Math.max(a1, b1);
-                int end = Math.min(a2, b2);
-                ans.add(new int[]{start, end});
-            }
-
-            if (a2 > b2) {
-                j++;
-            } else {
-                i++;
-            }
-        }
-
-        return ans.toArray(int[][]::new);
-    }
-
+    return ans.toArray(int[][]::new);
+  }
 }

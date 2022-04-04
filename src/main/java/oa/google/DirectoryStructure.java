@@ -3,86 +3,65 @@ package oa.google;
 import java.util.*;
 
 /**
- * Given a string  that represents a file, write a function that prints its directory structure.
- * E.g. "/app/components/header"
+ * Given a string that represents a file, write a function that prints its directory structure. E.g.
+ * "/app/components/header"
  *
- * // * app
- * // ** components
- * // *** header
+ * <p>// * app // ** components // *** header
  *
- * Follow up question:
- * Input files = [
- *   "/app/components/header",
- *   "/app/service",
- *   "/app/components/components/header",
- *   "/app/tests/header",
- *   "/app/tests/header/fee",
- *   "/images/images.png",
- *   "tsconfig.json",
- *   "index.html"
- * ]
+ * <p>Follow up question: Input files = [ "/app/components/header", "/app/service",
+ * "/app/components/components/header", "/app/tests/header", "/app/tests/header/fee",
+ * "/images/images.png", "tsconfig.json", "index.html" ]
  *
- * Output:
- * * app
- * ** components
- * *** header
- * ** service
- * *** components
- * **** header
- * ** tests
- * **** fee
- * * images
- * ** images.png
- * * tsconfig.json
- * * index.html
+ * <p>Output: * app ** components *** header ** service *** components **** header ** tests **** fee
+ * * images ** images.png * tsconfig.json * index.html
  *
- *  Follow up question 2: use Node class
- *
+ * <p>Follow up question 2: use Node class
  */
 public class DirectoryStructure {
 
-    private static List<String> printSingleDirStructure(String input) {
-        List<String> result = new ArrayList<>();
+  private static List<String> printSingleDirStructure(String input) {
+    List<String> result = new ArrayList<>();
 
-        String[] strs = input.split("/");
-        String level = "";
-        for (String s : strs) {
-            if ("".equals(s)) {
-                continue;
-            }
+    String[] strs = input.split("/");
+    String level = "";
+    for (String s : strs) {
+      if ("".equals(s)) {
+        continue;
+      }
 
-            level += "*";
-            result.add(level + " " + s);
-        }
-
-        return result;
+      level += "*";
+      result.add(level + " " + s);
     }
 
-    private static List<String> printDirStructure(List<String> input) {
-        List<String> result = new ArrayList<>();
-        Set<String> set = new HashSet<>();
+    return result;
+  }
 
-        for (String s : input) {
-            List<String> dirs = printSingleDirStructure(s);
+  private static List<String> printDirStructure(List<String> input) {
+    List<String> result = new ArrayList<>();
+    Set<String> set = new HashSet<>();
 
-            for (String str : dirs) {
-                if (set.contains(str)) {
-                    continue;
-                }
+    for (String s : input) {
+      List<String> dirs = printSingleDirStructure(s);
 
-                set.add(str);
-                result.add(str);
-            }
+      for (String str : dirs) {
+        if (set.contains(str)) {
+          continue;
         }
 
-        return result;
+        set.add(str);
+        result.add(str);
+      }
     }
 
+    return result;
+  }
 
-    public static void main(String[] args) {
-        System.out.println(printSingleDirStructure("/app/components/header"));
-        System.out.println(printSingleDirStructure("app/components/header"));
-        System.out.println(printDirStructure(Arrays.asList(
+  public static void main(String[] args) {
+    System.out.println(printSingleDirStructure("/app/components/header"));
+    System.out.println(printSingleDirStructure("app/components/header"));
+    System.out.println(
+        printDirStructure(
+            Arrays.asList(
                 "/app/components/header",
                 "/app/service",
                 "/app/components/components/header",
@@ -92,9 +71,11 @@ public class DirectoryStructure {
                 "tsconfig.json",
                 "index.html")));
 
-        System.out.println(printSingleDirStructure2("/app/components/header"));
-        System.out.println(printSingleDirStructure2("app/components/header"));
-        System.out.println(printDirStructure2(Arrays.asList(
+    System.out.println(printSingleDirStructure2("/app/components/header"));
+    System.out.println(printSingleDirStructure2("app/components/header"));
+    System.out.println(
+        printDirStructure2(
+            Arrays.asList(
                 "/app/components/header",
                 "/app/service",
                 "/app/components/components/header",
@@ -103,117 +84,110 @@ public class DirectoryStructure {
                 "/images/images.png",
                 "tsconfig.json",
                 "index.html")));
+  }
 
+  private static Node printDirStructure2(List<String> input) {
+    Node root = Node.createNode("/", 0);
+    Set<Node> rootChildren = root.children;
+
+    Map<Node, Set<Node>> map = new HashMap<>(32);
+    for (String s : input) {
+      List<Node> nodes = printSingleDirStructure2(s);
+
+      for (Node node : nodes) {
+        if (node.level == 1) {
+          rootChildren.add(node);
+        }
+
+        if (!map.containsKey(node)) {
+          map.put(node, node.children);
+        }
+
+        map.get(node).addAll(node.children);
+      }
     }
 
-    private static Node printDirStructure2(List<String> input) {
-        Node root = Node.createNode("/", 0);
-        Set<Node> rootChildren = root.children;
-
-        Map<Node, Set<Node>> map = new HashMap<>(32);
-        for (String s : input) {
-            List<Node> nodes = printSingleDirStructure2(s);
-
-            for (Node node : nodes) {
-                if (node.level == 1) {
-                    rootChildren.add(node);
-                }
-
-                if (!map.containsKey(node)) {
-                    map.put(node, node.children);
-                }
-
-                map.get(node).addAll(node.children);
-            }
-        }
-
-        for (Map.Entry<Node, Set<Node>> entry : map.entrySet()) {
-            entry.getKey().children = entry.getValue();
-        }
-
-        return root;
+    for (Map.Entry<Node, Set<Node>> entry : map.entrySet()) {
+      entry.getKey().children = entry.getValue();
     }
 
-    private static List<Node> printSingleDirStructure2(String input) {
-        List<Node> result = new ArrayList<>();
+    return root;
+  }
 
-        String[] strs = input.split("/");
-        String star = "";
-        int level = 0;
-        Node parentNode = null;
-        for (String s : strs) {
-            if ("".equals(s)) {
-                continue;
-            }
+  private static List<Node> printSingleDirStructure2(String input) {
+    List<Node> result = new ArrayList<>();
 
-            level++;
-            star += "*";
-            Node currentNode = Node.createNode(star + " " + s, level);
-            if (parentNode != null) {
-                parentNode.children.add(currentNode);
-            }
+    String[] strs = input.split("/");
+    String star = "";
+    int level = 0;
+    Node parentNode = null;
+    for (String s : strs) {
+      if ("".equals(s)) {
+        continue;
+      }
 
-            result.add(currentNode);
-            parentNode = currentNode;
-        }
+      level++;
+      star += "*";
+      Node currentNode = Node.createNode(star + " " + s, level);
+      if (parentNode != null) {
+        parentNode.children.add(currentNode);
+      }
 
-        return result;
+      result.add(currentNode);
+      parentNode = currentNode;
     }
 
-    static class Node {
+    return result;
+  }
 
-        static Map<String, Map<Integer, Node>> map = new HashMap<>();
+  static class Node {
 
-        String name;
-        int level;
-        Set<Node> children;
+    static Map<String, Map<Integer, Node>> map = new HashMap<>();
 
-        private Node(String name, int level) {
-            this.name = name;
-            this.level = level;
-            this.children = new HashSet<>();
-        }
+    String name;
+    int level;
+    Set<Node> children;
 
-        public static Node createNode(String name, int level) {
-            if (map.containsKey(name) && map.get(name).containsKey(level)) {
-                return map.get(name).get(level);
-            }
-
-            Node newNode = new Node(name, level);
-            if (!map.containsKey(name)) {
-                map.put(name, new HashMap<>());
-            }
-            map.get(name).put(level, newNode);
-
-            return newNode;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass()) {
-                return false;
-            }
-            Node node = (Node) o;
-            return level == node.level && Objects.equals(name, node.name);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(name, level);
-        }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "name='" + name + '\'' +
-                    ", level=" + level +
-                    ", children=" + children +
-                    '}';
-        }
-
+    private Node(String name, int level) {
+      this.name = name;
+      this.level = level;
+      this.children = new HashSet<>();
     }
 
+    public static Node createNode(String name, int level) {
+      if (map.containsKey(name) && map.get(name).containsKey(level)) {
+        return map.get(name).get(level);
+      }
+
+      Node newNode = new Node(name, level);
+      if (!map.containsKey(name)) {
+        map.put(name, new HashMap<>());
+      }
+      map.get(name).put(level, newNode);
+
+      return newNode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+      Node node = (Node) o;
+      return level == node.level && Objects.equals(name, node.name);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(name, level);
+    }
+
+    @Override
+    public String toString() {
+      return "Node{" + "name='" + name + '\'' + ", level=" + level + ", children=" + children + '}';
+    }
+  }
 }

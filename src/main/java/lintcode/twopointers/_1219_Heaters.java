@@ -4,40 +4,38 @@ import java.util.Arrays;
 
 public class _1219_Heaters {
 
-    public static int findRadius(int[] houses, int[] heaters) {
-        Arrays.sort(heaters);
+  public static int findRadius(int[] houses, int[] heaters) {
+    Arrays.sort(heaters);
 
-        int max = Integer.MIN_VALUE;
-        for (int house : houses) {
-            int radius = calRadius(house, heaters);
-            max = Math.max(max, radius);
-        }
-
-        return max;
+    int max = Integer.MIN_VALUE;
+    for (int house : houses) {
+      int radius = calRadius(house, heaters);
+      max = Math.max(max, radius);
     }
 
-    private static int calRadius(int house, int[] heaters) {
-        int left = 0, right = heaters.length - 1;
+    return max;
+  }
 
-        while (left + 1 < right) {
-            int mid = left + (right - left) / 2;
+  private static int calRadius(int house, int[] heaters) {
+    int left = 0, right = heaters.length - 1;
 
-            if (heaters[mid] == house) {
-                return 0;
-            } else if (house < heaters[mid]) {
-                right = mid;
-            } else {
-                left = mid;
-            }
-        }
+    while (left + 1 < right) {
+      int mid = left + (right - left) / 2;
 
-        return Math.min(Math.abs(house - heaters[left]), Math.abs(heaters[right] - house));
+      if (heaters[mid] == house) {
+        return 0;
+      } else if (house < heaters[mid]) {
+        right = mid;
+      } else {
+        left = mid;
+      }
     }
 
+    return Math.min(Math.abs(house - heaters[left]), Math.abs(heaters[right] - house));
+  }
 
-    public static void main(String[] args) {
-        System.out.println(findRadius(new int[]{1, 2, 3}, new int[]{2}));
-        System.out.println(findRadius(new int[]{1, 2, 3, 4}, new int[]{1, 4}));
-    }
-
+  public static void main(String[] args) {
+    System.out.println(findRadius(new int[] {1, 2, 3}, new int[] {2}));
+    System.out.println(findRadius(new int[] {1, 2, 3, 4}, new int[] {1, 4}));
+  }
 }

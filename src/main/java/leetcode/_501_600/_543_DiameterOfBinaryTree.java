@@ -29,30 +29,29 @@ The number of nodes in the tree is in the range [1, 104].
  */
 public class _543_DiameterOfBinaryTree {
 
-    public static void main(String[] args) {
-        System.out.println("3 == " + diameterOfBinaryTree(TreeNode.buildTree("1,2,3,4,5")));
-        System.out.println("1 == " + diameterOfBinaryTree(TreeNode.buildTree("1,2")));
+  static int max = 0;
+
+  public static void main(String[] args) {
+    System.out.println("3 == " + diameterOfBinaryTree(TreeNode.buildTree("1,2,3,4,5")));
+    System.out.println("1 == " + diameterOfBinaryTree(TreeNode.buildTree("1,2")));
+  }
+
+  public static int diameterOfBinaryTree(TreeNode root) {
+    max = 0;
+    maxDepth(root);
+    return max;
+  }
+
+  private static int maxDepth(TreeNode root) {
+    if (root == null) {
+      return 0;
     }
 
-    static int max = 0;
+    int left = maxDepth(root.left);
+    int right = maxDepth(root.right);
 
-    public static int diameterOfBinaryTree(TreeNode root) {
-        max = 0;
-        maxDepth(root);
-        return max;
-    }
+    max = Math.max(max, left + right);
 
-    private static int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-
-        max = Math.max(max, left + right);
-
-        return 1 + Math.max(left, right);
-    }
-
+    return 1 + Math.max(left, right);
+  }
 }

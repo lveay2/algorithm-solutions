@@ -21,29 +21,29 @@ The number of nodes in the tree is n.
  */
 public class _230_KthSmallestElementInABST {
 
-    public static void main(String[] args) {
-        TreeNode root = TreeNode.buildTree("5,3,6,2,4,null,null,1");
-        System.out.println("3 == " + kthSmallest(root, 3));
+  static int rank = 0, ans = 0;
+
+  public static void main(String[] args) {
+    TreeNode root = TreeNode.buildTree("5,3,6,2,4,null,null,1");
+    System.out.println("3 == " + kthSmallest(root, 3));
+  }
+
+  public static int kthSmallest(TreeNode root, int k) {
+    dfs(root, k);
+    return ans;
+  }
+
+  private static void dfs(TreeNode root, int k) {
+    if (root == null) {
+      return;
     }
 
-    static int rank = 0, ans = 0;
-    public static int kthSmallest(TreeNode root, int k) {
-        dfs(root, k);
-        return ans;
+    dfs(root.left, k);
+    rank++;
+    if (rank == k) {
+      ans = root.val;
+      return;
     }
-
-    private static void dfs(TreeNode root, int k) {
-        if (root == null) {
-            return;
-        }
-
-        dfs(root.left, k);
-        rank++;
-        if (rank == k) {
-            ans = root.val;
-            return;
-        }
-        dfs(root.right, k);
-    }
-
+    dfs(root.right, k);
+  }
 }

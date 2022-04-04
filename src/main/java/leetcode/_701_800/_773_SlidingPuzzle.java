@@ -46,75 +46,68 @@ Each value board[i][j] is unique.
  */
 public class _773_SlidingPuzzle {
 
-    public static void main(String[] args) {
-        System.out.println("1 == " + slidingPuzzle(new int[][]{
-                {1, 2, 3}, {4, 0, 5}
-        }));
-        System.out.println("-1 == " + slidingPuzzle(new int[][]{
-                {1, 2, 3}, {5, 4, 0}
-        }));
-        System.out.println("5 == " + slidingPuzzle(new int[][]{
-                {4, 1, 2}, {5, 0, 3}
-        }));
+  public static void main(String[] args) {
+    System.out.println("1 == " + slidingPuzzle(new int[][] {{1, 2, 3}, {4, 0, 5}}));
+    System.out.println("-1 == " + slidingPuzzle(new int[][] {{1, 2, 3}, {5, 4, 0}}));
+    System.out.println("5 == " + slidingPuzzle(new int[][] {{4, 1, 2}, {5, 0, 3}}));
+  }
+
+  public static int slidingPuzzle(int[][] board) {
+    String target = "123450";
+    StringBuilder sb = new StringBuilder();
+    for (int[] row : board) {
+      for (int col : row) {
+        sb.append(col);
+      }
     }
+    String startBoard = sb.toString();
 
-    public static int slidingPuzzle(int[][] board) {
-        String target = "123450";
-        StringBuilder sb = new StringBuilder();
-        for (int[] row : board) {
-            for (int col: row) {
-                sb.append(col);
-            }
-        }
-        String startBoard = sb.toString();
-
-        // 0 1 2
-        // 3 4 5
-        int[][] neighbors = new int[][]{
-                {1, 3},
-                {0, 2, 4},
-                {1, 5},
-                {0, 4},
-                {1, 3, 5},
-                {2, 4},
+    // 0 1 2
+    // 3 4 5
+    int[][] neighbors =
+        new int[][] {
+          {1, 3},
+          {0, 2, 4},
+          {1, 5},
+          {0, 4},
+          {1, 3, 5},
+          {2, 4},
         };
 
-        Queue<String> queue = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        queue.offer(startBoard);
-        visited.add(startBoard);
+    Queue<String> queue = new LinkedList<>();
+    Set<String> visited = new HashSet<>();
+    queue.offer(startBoard);
+    visited.add(startBoard);
 
-        int ans = 0;
-        while (!queue.isEmpty()) {
-            int n = queue.size();
-            for (int i = 0; i < n; i++) {
-                String current = queue.poll();
+    int ans = 0;
+    while (!queue.isEmpty()) {
+      int n = queue.size();
+      for (int i = 0; i < n; i++) {
+        String current = queue.poll();
 
-                if (target.equals(current)) {
-                    return ans;
-                }
-
-                int index = Objects.requireNonNull(current).indexOf('0');
-                for (int adj : neighbors[index]) {
-                    String newBoard = swap(current.toCharArray(), adj, index);
-                    if (!visited.contains(newBoard)) {
-                        queue.offer(newBoard);
-                        visited.add(newBoard);
-                    }
-                }
-            }
-            ans++;
+        if (target.equals(current)) {
+          return ans;
         }
 
-
-        return -1;
+        int index = Objects.requireNonNull(current).indexOf('0');
+        for (int adj : neighbors[index]) {
+          String newBoard = swap(current.toCharArray(), adj, index);
+          if (!visited.contains(newBoard)) {
+            queue.offer(newBoard);
+            visited.add(newBoard);
+          }
+        }
+      }
+      ans++;
     }
 
-    private static String swap(char[] board, int i, int j) {
-        char temp = board[i];
-        board[i] = board[j];
-        board[j] = temp;
-        return String.valueOf(board);
-    }
+    return -1;
+  }
 
+  private static String swap(char[] board, int i, int j) {
+    char temp = board[i];
+    board[i] = board[j];
+    board[j] = temp;
+    return String.valueOf(board);
+  }
 }

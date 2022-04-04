@@ -31,39 +31,37 @@ intervals[i].length == 2
  */
 public class _435_NonOverlappingIntervals {
 
-    public static void main(String[] args) {
-        System.out.println("1 == " + eraseOverlapIntervals(new int[][]{
-                {1, 2}, {2, 3}, {3, 4}, {1, 2},
-        }));
-        System.out.println("2 == " + eraseOverlapIntervals(new int[][]{
-                {1, 2}, {1, 2}, {1, 2}
-        }));
-        System.out.println("0 == " + eraseOverlapIntervals(new int[][]{
-                {1, 2}, {2, 3}
-        }));
+  public static void main(String[] args) {
+    System.out.println(
+        "1 == "
+            + eraseOverlapIntervals(
+                new int[][] {
+                  {1, 2}, {2, 3}, {3, 4}, {1, 2},
+                }));
+    System.out.println("2 == " + eraseOverlapIntervals(new int[][] {{1, 2}, {1, 2}, {1, 2}}));
+    System.out.println("0 == " + eraseOverlapIntervals(new int[][] {{1, 2}, {2, 3}}));
+  }
+
+  public static int eraseOverlapIntervals(int[][] intervals) {
+    int n = findNonOverlappingIntervals(intervals);
+    return (intervals.length - n);
+  }
+
+  private static int findNonOverlappingIntervals(int[][] intervals) {
+    Arrays.sort(intervals, Comparator.comparingInt(a -> a[1]));
+
+    int end = intervals[0][1];
+    int count = 1;
+
+    for (int i = 1; i < intervals.length; i++) {
+      int[] intv = intervals[i];
+
+      if (intv[0] >= end) {
+        count++;
+        end = intv[1];
+      }
     }
 
-    public static int eraseOverlapIntervals(int[][] intervals) {
-        int n = findNonOverlappingIntervals(intervals);
-        return (intervals.length - n);
-    }
-
-    private static int findNonOverlappingIntervals(int[][] intervals) {
-        Arrays.sort(intervals, Comparator.comparingInt(a -> a[1]));
-
-        int end = intervals[0][1];
-        int count = 1;
-
-        for (int i = 1; i < intervals.length; i++) {
-            int[] intv = intervals[i];
-
-            if (intv[0] >= end) {
-                count++;
-                end = intv[1];
-            }
-        }
-
-        return count;
-    }
-
+    return count;
+  }
 }

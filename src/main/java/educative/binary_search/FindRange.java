@@ -21,51 +21,50 @@ package educative.binary_search;
  */
 public class FindRange {
 
-    public static int[] findRange(int[] arr, int key) {
-        int left = search(arr, key, true);
+  public static int[] findRange(int[] arr, int key) {
+    int left = search(arr, key, true);
 
-        int right = -1;
-        if (left != -1) {
-            right = search(arr, key, false);
+    int right = -1;
+    if (left != -1) {
+      right = search(arr, key, false);
+    }
+
+    return new int[] {left, right};
+  }
+
+  private static int search(int[] arr, int key, boolean findMin) {
+    int start = 0, end = arr.length - 1;
+
+    if (key == arr[start] && findMin) return start;
+    if (key == arr[end] && !findMin) return end;
+
+    int keyIndex = -1;
+    while (start <= end) {
+      int mid = start + (end - start) / 2;
+
+      if (key < arr[mid]) {
+        end = mid - 1;
+      } else if (arr[mid] < key) {
+        start = mid + 1;
+      } else {
+        keyIndex = mid;
+        if (findMin) {
+          end = mid - 1;
+        } else {
+          start = mid + 1;
         }
-
-        return new int[]{left, right};
+      }
     }
 
-    private static int search(int[] arr, int key, boolean findMin) {
-        int start = 0, end = arr.length - 1;
+    return keyIndex;
+  }
 
-        if (key == arr[start] && findMin) return start;
-        if (key == arr[end] && !findMin) return end;
-
-        int keyIndex = -1;
-        while (start <= end) {
-            int mid = start + (end - start) / 2;
-
-            if (key < arr[mid]) {
-                end = mid - 1;
-            } else if (arr[mid] < key) {
-                start = mid + 1;
-            } else {
-                keyIndex = mid;
-                if (findMin) {
-                    end = mid - 1;
-                } else {
-                    start = mid + 1;
-                }
-            }
-        }
-
-        return keyIndex;
-    }
-
-    public static void main(String[] args) {
-        int[] result = FindRange.findRange(new int[]{4, 6, 6, 6, 9}, 6);
-        System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
-        result = FindRange.findRange(new int[]{1, 3, 8, 10, 15}, 10);
-        System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
-        result = FindRange.findRange(new int[]{1, 3, 8, 10, 15}, 12);
-        System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
-    }
-
+  public static void main(String[] args) {
+    int[] result = FindRange.findRange(new int[] {4, 6, 6, 6, 9}, 6);
+    System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
+    result = FindRange.findRange(new int[] {1, 3, 8, 10, 15}, 10);
+    System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
+    result = FindRange.findRange(new int[] {1, 3, 8, 10, 15}, 12);
+    System.out.println("Range: [" + result[0] + ", " + result[1] + "]");
+  }
 }

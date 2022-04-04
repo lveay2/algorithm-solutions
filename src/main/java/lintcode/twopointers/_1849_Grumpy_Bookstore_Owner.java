@@ -23,40 +23,38 @@ package lintcode.twopointers;
  * <p>样例 Input: [1,0,1,2,1,1,7,5] [0,1,0,1,0,1,0,1] 3 Output: 16 Explanation: The bookstore owner
  * keeps themselves not grumpy for the last 3 days. The maximum number of customers that can be
  * satisfied = 1 + 1 + 1 + 1 + 7 + 5 = 16.
- *
  */
 public class _1849_Grumpy_Bookstore_Owner {
 
-    public static int maxSatisfied(int[] customers, int[] grumpy, int X) {
-        int sum = 0;
-        for (int i = 0; i < customers.length; i++) {
-            if (i < X) {
-                sum += customers[i];
-            } else {
-                sum += (1 - grumpy[i]) * customers[i];
-            }
-        }
-        int result = sum;
-        int left = 0, right = X;
-        while (right < customers.length) {
-            if (grumpy[right] == 1) {
-                sum += customers[right];
-            }
-            if (grumpy[left] == 1) {
-                sum -= customers[left];
-            }
+  public static int maxSatisfied(int[] customers, int[] grumpy, int X) {
+    int sum = 0;
+    for (int i = 0; i < customers.length; i++) {
+      if (i < X) {
+        sum += customers[i];
+      } else {
+        sum += (1 - grumpy[i]) * customers[i];
+      }
+    }
+    int result = sum;
+    int left = 0, right = X;
+    while (right < customers.length) {
+      if (grumpy[right] == 1) {
+        sum += customers[right];
+      }
+      if (grumpy[left] == 1) {
+        sum -= customers[left];
+      }
 
-            result = Math.max(result, sum);
-            right++;
-            left++;
-        }
-
-        return result;
+      result = Math.max(result, sum);
+      right++;
+      left++;
     }
 
-    public static void main(String[] args) {
-        System.out.println(
-                maxSatisfied(new int[]{1, 0, 1, 2, 1, 1, 7, 5}, new int[]{0, 1, 0, 1, 0, 1, 0, 1}, 3));
-    }
+    return result;
+  }
 
+  public static void main(String[] args) {
+    System.out.println(
+        maxSatisfied(new int[] {1, 0, 1, 2, 1, 1, 7, 5}, new int[] {0, 1, 0, 1, 0, 1, 0, 1}, 3));
+  }
 }

@@ -1,12 +1,7 @@
 package design_pattern.singleton;
 
 public enum EnumSingleton {
+  INSTANCE;
 
-    INSTANCE;
-
-    public void doSomething() {
-
-    }
-
-
+  public void doSomething() {}
 }

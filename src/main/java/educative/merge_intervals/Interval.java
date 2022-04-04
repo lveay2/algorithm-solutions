@@ -2,12 +2,11 @@ package educative.merge_intervals;
 
 public class Interval {
 
-    int start;
-    int end;
+  int start;
+  int end;
 
-    public Interval(int start, int end) {
-        this.start = start;
-        this.end = end;
-    }
-
+  public Interval(int start, int end) {
+    this.start = start;
+    this.end = end;
+  }
 }

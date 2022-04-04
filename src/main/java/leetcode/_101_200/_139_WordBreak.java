@@ -36,52 +36,63 @@ All the strings of wordDict are unique.
  */
 public class _139_WordBreak {
 
-    public static void main(String[] args) {
-        System.out.println("true == " + wordBreak("leetcode", Arrays.asList("leet", "code")));
-        System.out.println("true == " + wordBreak("applepenapple", Arrays.asList("apple", "pen")));
-        System.out.println("false == " + wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
-        System.out.println("false == " + wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
-        System.out.println("false == "
-                + wordBreak(
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaab",
-                Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa",
-                        "aaaaaaaaa", "aaaaaaaaaa")));
+  public static void main(String[] args) {
+    System.out.println("true == " + wordBreak("leetcode", Arrays.asList("leet", "code")));
+    System.out.println("true == " + wordBreak("applepenapple", Arrays.asList("apple", "pen")));
+    System.out.println(
+        "false == " + wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
+    System.out.println(
+        "false == " + wordBreak("catsandog", Arrays.asList("cats", "dog", "sand", "and", "cat")));
+    System.out.println(
+        "false == "
+            + wordBreak(
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                    + "aaaaaaaaaaaaaaaaaaaaaaaaaab",
+                Arrays.asList(
+                    "a",
+                    "aa",
+                    "aaa",
+                    "aaaa",
+                    "aaaaa",
+                    "aaaaaa",
+                    "aaaaaaa",
+                    "aaaaaaaa",
+                    "aaaaaaaaa",
+                    "aaaaaaaaaa")));
+  }
+
+  public static boolean wordBreak(String s, List<String> wordDict) {
+    return dfs(s, wordDict, 0, new Boolean[s.length()]);
+  }
+
+  private static boolean dfs(String s, List<String> words, int start, Boolean[] memo) {
+    if (start == s.length()) {
+      return true;
     }
 
-    public static boolean wordBreak(String s, List<String> wordDict) {
-        return dfs(s, wordDict, 0, new Boolean[s.length()]);
+    // memo[start] store the result of dfs from s.substring(start)
+    if (memo[start] != null) {
+      return memo[start];
     }
 
-    private static boolean dfs(String s, List<String> words, int start, Boolean[] memo) {
-        if (start == s.length()) {
-            return true;
+    for (String word : words) {
+      int size = word.length();
+      int end = start + size;
+      //            System.out.println(word + " start: " + start + " end:" + end + " "
+      //                    + (end <= s.length() ? s.substring(start, end) : " ") + " "
+      //                    + (end <= s.length() ? s.substring(end) : " "));
+      //            System.out.println(Arrays.deepToString(memo));
+      if (end <= s.length() && s.substring(start, end).equals(word)) {
+        if (dfs(s, words, end, memo)) {
+          memo[start] = true;
+          //                    System.out.println(Arrays.deepToString(memo));
+          return true;
         }
-
-        // memo[start] store the result of dfs from s.substring(start)
-        if (memo[start] != null) {
-            return memo[start];
-        }
-
-        for (String word : words) {
-            int size = word.length();
-            int end = start + size;
-//            System.out.println(word + " start: " + start + " end:" + end + " "
-//                    + (end <= s.length() ? s.substring(start, end) : " ") + " "
-//                    + (end <= s.length() ? s.substring(end) : " "));
-//            System.out.println(Arrays.deepToString(memo));
-            if (end <= s.length() && s.substring(start, end).equals(word)) {
-                if (dfs(s, words, end, memo)) {
-                    memo[start] = true;
-//                    System.out.println(Arrays.deepToString(memo));
-                    return true;
-                }
-            }
-        }
-        memo[start] = false;
-//        System.out.println(Arrays.deepToString(memo));
-        return false;
+      }
     }
-
+    memo[start] = false;
+    //        System.out.println(Arrays.deepToString(memo));
+    return false;
+  }
 }

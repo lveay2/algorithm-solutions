@@ -8,43 +8,36 @@ import java.util.List;
 /**
  * Given a binary tree, return the postorder traversal of its nodes' values.
  *
- * Example:
+ * <p>Example:
  *
- * Input: [1,null,2,3]
- *    1
- *     \
- *      2
- *     /
- *    3
+ * <p>Input: [1,null,2,3] 1 \ 2 / 3
  *
- * Output: [3,2,1]
- *
+ * <p>Output: [3,2,1]
  */
 public class PostorderTraversal {
 
-    public static void main(String[] args) {
-        TreeNode one = TreeNode.buildTree("1,2,null,3");
-        System.out.println("[3, 2, 1] == " + new PostorderTraversal().postorderTraversal(one));
+  public static void main(String[] args) {
+    TreeNode one = TreeNode.buildTree("1,2,null,3");
+    System.out.println("[3, 2, 1] == " + new PostorderTraversal().postorderTraversal(one));
+  }
+
+  public List<Integer> postorderTraversal(TreeNode root) {
+    List<Integer> r = new ArrayList<>();
+
+    if (root == null) {
+      return r;
     }
 
-    public List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> r = new ArrayList<>();
+    List<Integer> left = postorderTraversal(root.left);
 
-        if (root == null) {
-            return r;
-        }
+    List<Integer> right = postorderTraversal(root.right);
 
-        List<Integer> left = postorderTraversal(root.left);
+    r.addAll(left);
 
-        List<Integer> right = postorderTraversal(root.right);
+    r.addAll(right);
 
-        r.addAll(left);
+    r.add(root.val);
 
-        r.addAll(right);
-
-        r.add(root.val);
-
-        return r;
-    }
-
+    return r;
+  }
 }

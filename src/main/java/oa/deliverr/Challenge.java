@@ -103,103 +103,105 @@ You should bill for all days between and including both the activation and deact
 You should not change function names or return types of the provided functions since our test cases depend on those not changing.
  */
 public class Challenge {
-    public static double billFor(String month, Subscription activeSubscription, User[] users) {
-        float total = 0.0f;
+  public static double billFor(String month, Subscription activeSubscription, User[] users) {
+    float total = 0.0f;
 
-        if (activeSubscription == null) {
-            return total;
+    if (activeSubscription == null) {
+      return total;
+    }
+
+    // parse date
+    String dateStr = month + "-01";
+    LocalDate billDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    LocalDate startDay = firstDayOfMonth(billDate);
+    LocalDate endDay = lastDayOfMonth(billDate);
+
+    long daysDiff = ChronoUnit.DAYS.between(startDay, endDay) + 1;
+    double dailyRate = activeSubscription.monthlyPriceInDollars * 1.0 / daysDiff;
+    //        System.out.println("dailyRate " + dailyRate);
+    int totalDays = 0;
+    for (User user : users) {
+      if (user.customerId != activeSubscription.customerId) {
+        continue;
+      }
+      // [deactivatedOn    activatedOn]
+      if (user.activatedOn != null
+          && user.deactivatedOn != null
+          && user.activatedOn.isAfter(user.deactivatedOn)) {
+        continue;
+      }
+      // [startDay                  endDay                             ]
+      // [                                   activatedOn  deactivatedOn]
+      if (user.activatedOn == null
+          || (user.activatedOn != null && user.activatedOn.isAfter(endDay))) {
+        continue;
+      }
+      // [                                startDay    endDay]
+      // [activatedOn     deactivatedOn                     ]
+      if (user.deactivatedOn != null && user.deactivatedOn.isBefore(startDay)) {
+        continue;
+      }
+      // [                startDay            endDay]
+      // [activatedOn                               ]
+      if (user.activatedOn.isBefore(startDay)) {
+        // [                startDay                    endDay]
+        // [activatedOn                deactivatedOn          ]
+        if (user.deactivatedOn != null && user.deactivatedOn.isBefore(endDay)) {
+          daysDiff = ChronoUnit.DAYS.between(startDay, user.deactivatedOn) + 1;
         }
-
-        // parse date
-        String dateStr = month + "-01";
-        LocalDate billDate = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        LocalDate startDay = firstDayOfMonth(billDate);
-        LocalDate endDay = lastDayOfMonth(billDate);
-
-        long daysDiff = ChronoUnit.DAYS.between(startDay, endDay) + 1;
-        double dailyRate = activeSubscription.monthlyPriceInDollars * 1.0 / daysDiff;
-//        System.out.println("dailyRate " + dailyRate);
-        int totalDays = 0;
-        for (User user : users) {
-            if (user.customerId != activeSubscription.customerId) {
-                continue;
-            }
-            // [deactivatedOn    activatedOn]
-            if (user.activatedOn != null && user.deactivatedOn != null && user.activatedOn.isAfter(user.deactivatedOn)) {
-                continue;
-            }
-            // [startDay                  endDay                             ]
-            // [                                   activatedOn  deactivatedOn]
-            if (user.activatedOn == null || (user.activatedOn != null && user.activatedOn.isAfter(endDay))) {
-                continue;
-            }
-            // [                                startDay    endDay]
-            // [activatedOn     deactivatedOn                     ]
-            if (user.deactivatedOn != null && user.deactivatedOn.isBefore(startDay)) {
-                continue;
-            }
-            // [                startDay            endDay]
-            // [activatedOn                               ]
-            if (user.activatedOn.isBefore(startDay)) {
-                // [                startDay                    endDay]
-                // [activatedOn                deactivatedOn          ]
-                if (user.deactivatedOn != null && user.deactivatedOn.isBefore(endDay)) {
-                    daysDiff = ChronoUnit.DAYS.between(startDay, user.deactivatedOn) + 1;
-                }
-            }
-            // [startDay                  endDay]
-            // [            activatedOn         ]
-            if (user.activatedOn.isAfter(startDay) && user.activatedOn.isBefore(endDay)) {
-                // [ startDay                                      endDay]
-                // [             activatedOn     deactivatedOn           ]
-                if (user.deactivatedOn != null && user.deactivatedOn.isBefore(endDay)) {
-                    daysDiff = ChronoUnit.DAYS.between(user.activatedOn, user.deactivatedOn) + 1;
-                }
-                // [ startDay                   endDay                ]
-                // [             activatedOn             deactivatedOn]
-                else {
-                    daysDiff = ChronoUnit.DAYS.between(user.activatedOn, endDay) + 1;
-                }
-            }
-
-            totalDays += daysDiff;
+      }
+      // [startDay                  endDay]
+      // [            activatedOn         ]
+      if (user.activatedOn.isAfter(startDay) && user.activatedOn.isBefore(endDay)) {
+        // [ startDay                                      endDay]
+        // [             activatedOn     deactivatedOn           ]
+        if (user.deactivatedOn != null && user.deactivatedOn.isBefore(endDay)) {
+          daysDiff = ChronoUnit.DAYS.between(user.activatedOn, user.deactivatedOn) + 1;
         }
+        // [ startDay                   endDay                ]
+        // [             activatedOn             deactivatedOn]
+        else {
+          daysDiff = ChronoUnit.DAYS.between(user.activatedOn, endDay) + 1;
+        }
+      }
 
-        return (double) Math.round(dailyRate * totalDays * 100) / 100;
+      totalDays += daysDiff;
     }
 
-    /*******************
-     * Helper functions *
-     *******************/
+    return (double) Math.round(dailyRate * totalDays * 100) / 100;
+  }
 
-    /**
-     * Takes a LocalDate object and returns a LocalDate which is the first day
-     * of that month. For example:
-     * <p>
-     * firstDayOfMonth(LocalDate.of(2019, 2, 7)) // => LocalDate.of(2019, 2, 1)
-     **/
-    private static LocalDate firstDayOfMonth(LocalDate date) {
-        return date.withDayOfMonth(1);
-    }
+  /*******************
+   * Helper functions *
+   *******************/
 
-    /**
-     * Takes a LocalDate object and returns a LocalDate which is the last day
-     * of that month. For example:
-     * <p>
-     * lastDayOfMonth(LocalDate.of(2019, 2, 7)) // => LocalDate.of(2019, 2, 28)
-     **/
-    private static LocalDate lastDayOfMonth(LocalDate date) {
-        return date.withDayOfMonth(date.lengthOfMonth());
-    }
+  /**
+   * Takes a LocalDate object and returns a LocalDate which is the first day of that month. For
+   * example:
+   *
+   * <p>firstDayOfMonth(LocalDate.of(2019, 2, 7)) // => LocalDate.of(2019, 2, 1)
+   */
+  private static LocalDate firstDayOfMonth(LocalDate date) {
+    return date.withDayOfMonth(1);
+  }
 
-    /**
-     * Takes a LocalDate object and returns a LocalDate which is the next day.
-     * For example:
-     * <p>
-     * nextDay(LocalDate.of(2019, 2, 7))  // => LocalDate.of(2019, 2, 8)
-     * nextDay(LocalDate.of(2019, 2, 28)) // => LocalDate.of(2019, 3, 1)
-     **/
-    private static LocalDate nextDay(LocalDate date) {
-        return date.plusDays(1);
-    }
+  /**
+   * Takes a LocalDate object and returns a LocalDate which is the last day of that month. For
+   * example:
+   *
+   * <p>lastDayOfMonth(LocalDate.of(2019, 2, 7)) // => LocalDate.of(2019, 2, 28)
+   */
+  private static LocalDate lastDayOfMonth(LocalDate date) {
+    return date.withDayOfMonth(date.lengthOfMonth());
+  }
+
+  /**
+   * Takes a LocalDate object and returns a LocalDate which is the next day. For example:
+   *
+   * <p>nextDay(LocalDate.of(2019, 2, 7)) // => LocalDate.of(2019, 2, 8) nextDay(LocalDate.of(2019,
+   * 2, 28)) // => LocalDate.of(2019, 3, 1)
+   */
+  private static LocalDate nextDay(LocalDate date) {
+    return date.plusDays(1);
+  }
 }

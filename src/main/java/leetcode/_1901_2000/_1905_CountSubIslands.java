@@ -33,72 +33,75 @@ grid1[i][j] and grid2[i][j] are either 0 or 1.
  */
 public class _1905_CountSubIslands {
 
-    public static void main(String[] args) {
-        int[][] grid1 = {
-                {1, 1, 1, 0, 0},
-                {0, 1, 1, 1, 1},
-                {0, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0},
-                {1, 1, 0, 1, 1}
-        };
-        int[][] grid2 = {
-                {1, 1, 1, 0, 0},
-                {0, 0, 1, 1, 1},
-                {0, 1, 0, 0, 0},
-                {1, 0, 1, 1, 0},
-                {0, 1, 0, 1, 0}
-        };
-        System.out.println("3 == " + countSubIslands(grid1, grid2));
+  public static void main(String[] args) {
+    int[][] grid1 = {
+      {1, 1, 1, 0, 0},
+      {0, 1, 1, 1, 1},
+      {0, 0, 0, 0, 0},
+      {1, 0, 0, 0, 0},
+      {1, 1, 0, 1, 1}
+    };
+    int[][] grid2 = {
+      {1, 1, 1, 0, 0},
+      {0, 0, 1, 1, 1},
+      {0, 1, 0, 0, 0},
+      {1, 0, 1, 1, 0},
+      {0, 1, 0, 1, 0}
+    };
+    System.out.println("3 == " + countSubIslands(grid1, grid2));
 
-        int[][] grid3 = {{1, 0, 1, 0, 1}, {1, 1, 1, 1, 1}, {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {1, 0, 1, 0, 1}};
-        int[][] grid4 = {{0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {0, 1, 0, 1, 0}, {0, 1, 0, 1, 0}, {1, 0, 0, 0, 1}};
-        System.out.println("2 == " + countSubIslands(grid3, grid4));
+    int[][] grid3 = {
+      {1, 0, 1, 0, 1}, {1, 1, 1, 1, 1}, {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {1, 0, 1, 0, 1}
+    };
+    int[][] grid4 = {
+      {0, 0, 0, 0, 0}, {1, 1, 1, 1, 1}, {0, 1, 0, 1, 0}, {0, 1, 0, 1, 0}, {1, 0, 0, 0, 1}
+    };
+    System.out.println("2 == " + countSubIslands(grid3, grid4));
+  }
+
+  public static int countSubIslands(int[][] grid1, int[][] grid2) {
+    int m = grid1.length;
+    int n = grid1[0].length;
+
+    int ans = 0;
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid1[i][j] == 0 && grid2[i][j] == 1) {
+          dfs(grid2, i, j);
+        }
+      }
+    }
+    //        System.out.println(Arrays.deepToString(grid2));
+
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid2[i][j] == 1) {
+          dfs(grid2, i, j);
+          ans++;
+        }
+      }
     }
 
-    public static int countSubIslands(int[][] grid1, int[][] grid2) {
-        int m = grid1.length;
-        int n = grid1[0].length;
+    return ans;
+  }
 
-        int ans = 0;
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid1[i][j] == 0 && grid2[i][j] == 1) {
-                    dfs(grid2, i, j);
-                }
-            }
-        }
-//        System.out.println(Arrays.deepToString(grid2));
-
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid2[i][j] == 1) {
-                    dfs(grid2, i, j);
-                    ans++;
-                }
-            }
-        }
-
-        return ans;
+  private static void dfs(int[][] grid, int i, int j) {
+    //        System.out.println(i + " " + j + "\n" + Arrays.deepToString(grid));
+    int m = grid.length;
+    int n = grid[0].length;
+    if (i < 0 || i >= m || j < 0 || j >= n) {
+      return;
     }
 
-    private static void dfs(int[][] grid, int i, int j) {
-//        System.out.println(i + " " + j + "\n" + Arrays.deepToString(grid));
-        int m = grid.length;
-        int n = grid[0].length;
-        if (i < 0 || i >= m || j < 0 || j >= n) {
-            return;
-        }
-
-        if (grid[i][j] == 0) {
-            return;
-        }
-
-        grid[i][j] = 0;
-        dfs(grid, i, j + 1);
-        dfs(grid, i, j - 1);
-        dfs(grid, i + 1, j);
-        dfs(grid, i - 1, j);
+    if (grid[i][j] == 0) {
+      return;
     }
 
+    grid[i][j] = 0;
+    dfs(grid, i, j + 1);
+    dfs(grid, i, j - 1);
+    dfs(grid, i + 1, j);
+    dfs(grid, i - 1, j);
+  }
 }

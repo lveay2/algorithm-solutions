@@ -4,62 +4,74 @@ import java.util.*;
 
 public class TasksScheduling {
 
-    public static boolean isSchedulingPossible(int tasks, int[][] prerequisites) {
-        if (tasks == 0 || prerequisites == null || prerequisites.length == 0 || prerequisites[0].length == 0) {
-            return false;
-        }
-
-        Map<Integer, Integer> indegrees = new HashMap<>();
-        Map<Integer, Set<Integer>> graph = new HashMap<>();
-
-        for (int i = 0; i < tasks; i++) {
-            indegrees.put(i, 0);
-            graph.put(i, new HashSet<>());
-        }
-
-        for (int[] prerequisite : prerequisites) {
-            int prer = prerequisite[0];
-            int later = prerequisite[1];
-            indegrees.put(later, indegrees.get(later) + 1);
-            graph.get(prer).add(later);
-        }
-
-        Queue<Integer> queue = new LinkedList<>();
-        for (Map.Entry<Integer, Integer> e : indegrees.entrySet()) {
-            if (e.getValue() == 0) {
-                queue.offer(e.getKey());
-            }
-        }
-
-        int count = 0;
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            count++;
-
-            for (int neigbhor : graph.get(current)) {
-                indegrees.put(neigbhor, indegrees.get(neigbhor) - 1);
-
-                if (indegrees.get(neigbhor) == 0) {
-                    queue.offer(neigbhor);
-                }
-            }
-
-        }
-
-        return count == tasks;
+  public static boolean isSchedulingPossible(int tasks, int[][] prerequisites) {
+    if (tasks == 0
+        || prerequisites == null
+        || prerequisites.length == 0
+        || prerequisites[0].length == 0) {
+      return false;
     }
 
-    public static void main(String[] args) {
-        boolean result = TasksScheduling.isSchedulingPossible(3, new int[][]{new int[]{0, 1}, new int[]{1, 2}});
-        System.out.println("Tasks execution possible: " + result);
+    Map<Integer, Integer> indegrees = new HashMap<>();
+    Map<Integer, Set<Integer>> graph = new HashMap<>();
 
-        result = TasksScheduling.isSchedulingPossible(3,
-                new int[][]{new int[]{0, 1}, new int[]{1, 2}, new int[]{2, 0}});
-        System.out.println("Tasks execution possible: " + result);
-
-        result = TasksScheduling.isSchedulingPossible(6, new int[][]{new int[]{2, 5}, new int[]{0, 5},
-                new int[]{0, 4}, new int[]{1, 4}, new int[]{3, 2}, new int[]{1, 3}});
-        System.out.println("Tasks execution possible: " + result);
+    for (int i = 0; i < tasks; i++) {
+      indegrees.put(i, 0);
+      graph.put(i, new HashSet<>());
     }
 
+    for (int[] prerequisite : prerequisites) {
+      int prer = prerequisite[0];
+      int later = prerequisite[1];
+      indegrees.put(later, indegrees.get(later) + 1);
+      graph.get(prer).add(later);
+    }
+
+    Queue<Integer> queue = new LinkedList<>();
+    for (Map.Entry<Integer, Integer> e : indegrees.entrySet()) {
+      if (e.getValue() == 0) {
+        queue.offer(e.getKey());
+      }
+    }
+
+    int count = 0;
+    while (!queue.isEmpty()) {
+      int current = queue.poll();
+      count++;
+
+      for (int neigbhor : graph.get(current)) {
+        indegrees.put(neigbhor, indegrees.get(neigbhor) - 1);
+
+        if (indegrees.get(neigbhor) == 0) {
+          queue.offer(neigbhor);
+        }
+      }
+    }
+
+    return count == tasks;
+  }
+
+  public static void main(String[] args) {
+    boolean result =
+        TasksScheduling.isSchedulingPossible(3, new int[][] {new int[] {0, 1}, new int[] {1, 2}});
+    System.out.println("Tasks execution possible: " + result);
+
+    result =
+        TasksScheduling.isSchedulingPossible(
+            3, new int[][] {new int[] {0, 1}, new int[] {1, 2}, new int[] {2, 0}});
+    System.out.println("Tasks execution possible: " + result);
+
+    result =
+        TasksScheduling.isSchedulingPossible(
+            6,
+            new int[][] {
+              new int[] {2, 5},
+              new int[] {0, 5},
+              new int[] {0, 4},
+              new int[] {1, 4},
+              new int[] {3, 2},
+              new int[] {1, 3}
+            });
+    System.out.println("Tasks execution possible: " + result);
+  }
 }

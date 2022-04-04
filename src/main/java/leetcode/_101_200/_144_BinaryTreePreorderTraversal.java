@@ -28,45 +28,44 @@ The number of nodes in the tree is in the range [0, 100].
  */
 public class _144_BinaryTreePreorderTraversal {
 
-    public static void main(String[] args) {
-        System.out.println("[1, 2, 3] == " + preorderTraversal(TreeNode.buildTree("1,null,2,3")));
-        System.out.println("[] == " + preorderTraversal(TreeNode.buildTree("")));
-        System.out.println("[1] == " + preorderTraversal(TreeNode.buildTree("1")));
+  private static List<Integer> result = null;
 
-        System.out.println("[1, 2, 3] == " + preorderTraversal2(TreeNode.buildTree("1,null,2,3")));
-        System.out.println("[] == " + preorderTraversal2(TreeNode.buildTree("")));
-        System.out.println("[1] == " + preorderTraversal2(TreeNode.buildTree("1")));
+  public static void main(String[] args) {
+    System.out.println("[1, 2, 3] == " + preorderTraversal(TreeNode.buildTree("1,null,2,3")));
+    System.out.println("[] == " + preorderTraversal(TreeNode.buildTree("")));
+    System.out.println("[1] == " + preorderTraversal(TreeNode.buildTree("1")));
+
+    System.out.println("[1, 2, 3] == " + preorderTraversal2(TreeNode.buildTree("1,null,2,3")));
+    System.out.println("[] == " + preorderTraversal2(TreeNode.buildTree("")));
+    System.out.println("[1] == " + preorderTraversal2(TreeNode.buildTree("1")));
+  }
+
+  public static List<Integer> preorderTraversal(TreeNode root) {
+    result = new ArrayList<>();
+    traverse(root);
+    return result;
+  }
+
+  private static void traverse(TreeNode root) {
+    if (root == null) {
+      return;
     }
 
-    private static List<Integer> result = null;
+    result.add(root.val);
+    traverse(root.left);
+    traverse(root.right);
+  }
 
-    public static List<Integer> preorderTraversal(TreeNode root) {
-        result = new ArrayList<>();
-        traverse(root);
-        return result;
+  public static List<Integer> preorderTraversal2(TreeNode root) {
+    List<Integer> result = new ArrayList<>();
+    if (root == null) {
+      return result;
     }
 
-    private static void traverse(TreeNode root) {
-        if (root == null) {
-            return;
-        }
+    result.add(root.val);
+    result.addAll(preorderTraversal2(root.left));
+    result.addAll(preorderTraversal2(root.right));
 
-        result.add(root.val);
-        traverse(root.left);
-        traverse(root.right);
-    }
-
-    public static List<Integer> preorderTraversal2(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
-
-        result.add(root.val);
-        result.addAll(preorderTraversal2(root.left));
-        result.addAll(preorderTraversal2(root.right));
-
-        return result;
-    }
-
+    return result;
+  }
 }

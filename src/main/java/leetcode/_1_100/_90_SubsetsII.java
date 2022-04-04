@@ -27,34 +27,32 @@ Constraints:
  */
 public class _90_SubsetsII {
 
-    public static void main(String[] args) {
-        System.out.println(
-                "[[], [1], [1, 2], [1, 2, 2], [2], [2, 2]] ==\n"
-                        + subsetsWithDup(new int[]{1, 2, 2}));
-        System.out.println("[[],[0]] ==" + subsetsWithDup(new int[]{0}));
+  private static List<List<Integer>> result = null;
+
+  public static void main(String[] args) {
+    System.out.println(
+        "[[], [1], [1, 2], [1, 2, 2], [2], [2, 2]] ==\n" + subsetsWithDup(new int[] {1, 2, 2}));
+    System.out.println("[[],[0]] ==" + subsetsWithDup(new int[] {0}));
+  }
+
+  public static List<List<Integer>> subsetsWithDup(int[] nums) {
+    result = new ArrayList<>();
+    Arrays.sort(nums);
+    dfs(new ArrayList<>(), nums, 0);
+    return result;
+  }
+
+  private static void dfs(List<Integer> combo, int[] nums, int start) {
+    result.add(new ArrayList<>(combo));
+
+    for (int i = start; i < nums.length; i++) {
+      if (i > start && nums[i] == nums[i - 1]) {
+        continue;
+      }
+
+      combo.add(nums[i]);
+      dfs(combo, nums, i + 1);
+      combo.remove(combo.size() - 1);
     }
-
-    private static List<List<Integer>> result = null;
-
-    public static List<List<Integer>> subsetsWithDup(int[] nums) {
-        result = new ArrayList<>();
-        Arrays.sort(nums);
-        dfs(new ArrayList<>(), nums, 0);
-        return result;
-    }
-
-    private static void dfs(List<Integer> combo, int[] nums, int start) {
-        result.add(new ArrayList<>(combo));
-
-        for (int i = start; i < nums.length; i++) {
-            if (i > start && nums[i] == nums[i - 1]) {
-                continue;
-            }
-
-            combo.add(nums[i]);
-            dfs(combo, nums, i + 1);
-            combo.remove(combo.size() - 1);
-        }
-    }
-
+  }
 }

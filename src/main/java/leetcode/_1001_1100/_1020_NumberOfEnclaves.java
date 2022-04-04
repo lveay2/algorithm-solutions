@@ -29,59 +29,55 @@ grid[i][j] is either 0 or 1.
 */
 public class _1020_NumberOfEnclaves {
 
-    public static void main(String[] args) {
-        int[][] grid = {
-                {0, 0, 0, 0}, {1, 0, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}
-        };
-        System.out.println("3 == " + numEnclaves(grid));
+  public static void main(String[] args) {
+    int[][] grid = {{0, 0, 0, 0}, {1, 0, 1, 0}, {0, 1, 1, 0}, {0, 0, 0, 0}};
+    System.out.println("3 == " + numEnclaves(grid));
 
-        int[][] grid2 = {
-                {0, 1, 1, 0}, {0, 0, 1, 0}, {0, 0, 1, 0}, {0, 0, 0, 0}
-        };
-        System.out.println("0 == " + numEnclaves(grid2));
+    int[][] grid2 = {{0, 1, 1, 0}, {0, 0, 1, 0}, {0, 0, 1, 0}, {0, 0, 0, 0}};
+    System.out.println("0 == " + numEnclaves(grid2));
+  }
+
+  public static int numEnclaves(int[][] grid) {
+    int m = grid.length;
+    int n = grid[0].length;
+
+    for (int j = 0; j < n; j++) {
+      dfs(grid, 0, j);
+      dfs(grid, m - 1, j);
     }
 
-    public static int numEnclaves(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-
-        for (int j = 0; j < n; j++) {
-            dfs(grid, 0, j);
-            dfs(grid, m - 1, j);
-        }
-
-        for (int i = 0; i < m; i++) {
-            dfs(grid, i, 0);
-            dfs(grid, i, n - 1);
-        }
-
-        int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
-                    ans += dfs(grid, i, j);
-                }
-            }
-        }
-
-        return ans;
+    for (int i = 0; i < m; i++) {
+      dfs(grid, i, 0);
+      dfs(grid, i, n - 1);
     }
 
-    private static int dfs(int[][] grid, int i, int j) {
-        int m = grid.length;
-        int n = grid[0].length;
-        if (i < 0 || i >= m || j < 0 || j >= n) {
-            return 0;
+    int ans = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 1) {
+          ans += dfs(grid, i, j);
         }
-
-        if (grid[i][j] == 0) {
-            return 0;
-        }
-        grid[i][j] = 0;
-        return dfs(grid, i, j + 1)
-                + dfs(grid, i, j - 1)
-                + dfs(grid, i - 1, j)
-                + dfs(grid, i + 1, j) + 1;
+      }
     }
 
+    return ans;
+  }
+
+  private static int dfs(int[][] grid, int i, int j) {
+    int m = grid.length;
+    int n = grid[0].length;
+    if (i < 0 || i >= m || j < 0 || j >= n) {
+      return 0;
+    }
+
+    if (grid[i][j] == 0) {
+      return 0;
+    }
+    grid[i][j] = 0;
+    return dfs(grid, i, j + 1)
+        + dfs(grid, i, j - 1)
+        + dfs(grid, i - 1, j)
+        + dfs(grid, i + 1, j)
+        + 1;
+  }
 }

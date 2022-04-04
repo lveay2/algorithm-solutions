@@ -26,54 +26,51 @@ grid[i][j] is either 0 or 1.
 */
 public class _695_MaxAreaOfIsland {
 
-    public static void main(String[] args) {
-        int[][] grid = {
-                {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
-                {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
-        };
-        System.out.println("6 == " + maxAreaOfIsland(grid));
+  public static void main(String[] args) {
+    int[][] grid = {
+      {0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+      {0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+      {0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0},
+      {0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0},
+      {0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0}
+    };
+    System.out.println("6 == " + maxAreaOfIsland(grid));
 
+    int[][] grid2 = {{0, 0, 0, 0, 0, 0, 0, 0}};
+    System.out.println("0 == " + maxAreaOfIsland(grid2));
+  }
 
-        int[][] grid2 = {
-                {0, 0, 0, 0, 0, 0, 0, 0}
-        };
-        System.out.println("0 == " + maxAreaOfIsland(grid2));
-    }
+  public static int maxAreaOfIsland(int[][] grid) {
+    int m = grid.length;
+    int n = grid[0].length;
 
-    public static int maxAreaOfIsland(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-
-        int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 1) {
-                    ans = Math.max(ans, dfs(grid, i, j));
-                }
-            }
+    int ans = 0;
+    for (int i = 0; i < m; i++) {
+      for (int j = 0; j < n; j++) {
+        if (grid[i][j] == 1) {
+          ans = Math.max(ans, dfs(grid, i, j));
         }
-
-        return ans;
+      }
     }
 
-    private static int dfs(int[][] grid, int i, int j) {
-        int m = grid.length;
-        int n = grid[0].length;
-        if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
-            return 0;
-        }
+    return ans;
+  }
 
-        grid[i][j] = 0;
-        return 1 + dfs(grid, i, j + 1)
-                + dfs(grid, i, j - 1)
-                + dfs(grid, i - 1, j)
-                + dfs(grid, i + 1, j);
-
+  private static int dfs(int[][] grid, int i, int j) {
+    int m = grid.length;
+    int n = grid[0].length;
+    if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 0) {
+      return 0;
     }
+
+    grid[i][j] = 0;
+    return 1
+        + dfs(grid, i, j + 1)
+        + dfs(grid, i, j - 1)
+        + dfs(grid, i - 1, j)
+        + dfs(grid, i + 1, j);
+  }
 }

@@ -10,101 +10,98 @@ import java.util.Queue;
 /**
  * Given a binary tree, return all root-to-leaf paths.
  *
- * Note: A leaf is a node with no children.
+ * <p>Note: A leaf is a node with no children.
  *
- * Example:
+ * <p>Example:
  *
- * Input:
+ * <p>Input:
  *
- *    1
- *  /   \
- * 2     3
- *  \
- *   5
+ * <p>1 / \ 2 3 \ 5
  *
- * Output: ["1->2->5", "1->3"]
+ * <p>Output: ["1->2->5", "1->3"]
  *
- * Explanation: All root-to-leaf paths are: 1->2->5, 1->3
- *
+ * <p>Explanation: All root-to-leaf paths are: 1->2->5, 1->3
  */
 public class BinaryTreePaths {
 
-    private static TreeNode deserialize(String tree) {
-        if (tree == null || tree.length() == 0) {
-            return null;
-        }
-
-        String[] trees = tree.split(",");
-
-        Queue<TreeNode> queue = new LinkedList<>();
-
-        TreeNode root = new TreeNode(Integer.parseInt(trees[0]));
-
-        queue.offer(root);
-
-        int l = trees.length;
-
-        int i = 0;
-
-        while (!queue.isEmpty() && i < l) {
-            TreeNode head = queue.poll();
-
-            i++;
-
-            if (i < l && !trees[i].equals("null")) {
-                TreeNode left = new TreeNode(Integer.parseInt(trees[i]));
-
-                head.left = left;
-
-                queue.offer(left);
-            }
-
-            i++;
-
-            if (i < l && !trees[i].equals("null")) {
-                TreeNode right = new TreeNode(Integer.parseInt(trees[i]));
-
-                head.right = right;
-
-                queue.offer(right);
-            }
-        }
-
-        return root;
+  private static TreeNode deserialize(String tree) {
+    if (tree == null || tree.length() == 0) {
+      return null;
     }
 
-    public static void main(String[] args) {
-        System.out.println("[1->2->5, 1->3] == " + new BinaryTreePaths().binaryTreePaths(deserialize("1,2,3,null,5")));
+    String[] trees = tree.split(",");
 
-        System.out.println("[1->2->4, 1->2->5, 1->3] == " + new BinaryTreePaths().binaryTreePaths(deserialize("1,2,3,4,5")));
+    Queue<TreeNode> queue = new LinkedList<>();
+
+    TreeNode root = new TreeNode(Integer.parseInt(trees[0]));
+
+    queue.offer(root);
+
+    int l = trees.length;
+
+    int i = 0;
+
+    while (!queue.isEmpty() && i < l) {
+      TreeNode head = queue.poll();
+
+      i++;
+
+      if (i < l && !trees[i].equals("null")) {
+        TreeNode left = new TreeNode(Integer.parseInt(trees[i]));
+
+        head.left = left;
+
+        queue.offer(left);
+      }
+
+      i++;
+
+      if (i < l && !trees[i].equals("null")) {
+        TreeNode right = new TreeNode(Integer.parseInt(trees[i]));
+
+        head.right = right;
+
+        queue.offer(right);
+      }
     }
 
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> r = new ArrayList<>();
+    return root;
+  }
 
-        if (root == null) {
-            return r;
-        }
+  public static void main(String[] args) {
+    System.out.println(
+        "[1->2->5, 1->3] == " + new BinaryTreePaths().binaryTreePaths(deserialize("1,2,3,null,5")));
 
-        if (root.left == null && root.right == null) {
-            r.add(Integer.toString(root.val));
+    System.out.println(
+        "[1->2->4, 1->2->5, 1->3] == "
+            + new BinaryTreePaths().binaryTreePaths(deserialize("1,2,3,4,5")));
+  }
 
-            return r;
-        }
+  public List<String> binaryTreePaths(TreeNode root) {
+    List<String> r = new ArrayList<>();
 
-        List<String> leftPath = binaryTreePaths(root.left);
-
-        List<String> rightPath = binaryTreePaths(root.right);
-
-        for (String path : leftPath) {
-            r.add(root.val + "->" + path);
-        }
-
-        for (String path : rightPath) {
-            r.add(root.val + "->" + path);
-        }
-
-        return r;
+    if (root == null) {
+      return r;
     }
 
+    if (root.left == null && root.right == null) {
+      r.add(Integer.toString(root.val));
+
+      return r;
+    }
+
+    List<String> leftPath = binaryTreePaths(root.left);
+
+    List<String> rightPath = binaryTreePaths(root.right);
+
+    for (String path : leftPath) {
+      r.add(root.val + "->" + path);
+    }
+
+    for (String path : rightPath) {
+      r.add(root.val + "->" + path);
+    }
+
+    return r;
+  }
 }

@@ -28,41 +28,36 @@ inorder is guaranteed to be the inorder traversal of the tree.
  */
 public class _105_ConstructBinaryTreeFromPreorderAndInorderTraversal {
 
-    public static void main(String[] args) {
-        TreeNode root = buildTree(new int[]{3, 9, 20, 15, 7}, new int[]{9, 3, 15, 20, 7});
-        System.out.println("[3, 9, 20, 15, 7] == " + root.printTreeInPreorder());
+  public static void main(String[] args) {
+    TreeNode root = buildTree(new int[] {3, 9, 20, 15, 7}, new int[] {9, 3, 15, 20, 7});
+    System.out.println("[3, 9, 20, 15, 7] == " + root.printTreeInPreorder());
+  }
+
+  public static TreeNode buildTree(int[] preorder, int[] inorder) {
+    return dfs(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1);
+  }
+
+  private static TreeNode dfs(
+      int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+    if (preStart > preEnd) {
+      return null;
     }
 
-    public static TreeNode buildTree(int[] preorder, int[] inorder) {
-        return dfs(preorder, 0, preorder.length - 1,
-                inorder, 0, inorder.length - 1);
+    int rootValue = preorder[preStart];
+    TreeNode root = new TreeNode(rootValue);
+
+    int index = 0;
+    for (int i = inStart; i <= inEnd; i++) {
+      if (inorder[i] == rootValue) {
+        index = i;
+        break;
+      }
     }
+    int leftSize = index - inStart;
 
-    private static TreeNode dfs(int[] preorder, int preStart, int preEnd,
-                                int[] inorder, int inStart, int inEnd) {
-        if (preStart > preEnd) {
-            return null;
-        }
+    root.left = dfs(preorder, preStart + 1, preStart + leftSize, inorder, inStart, index - 1);
+    root.right = dfs(preorder, preStart + leftSize + 1, preEnd, inorder, index + 1, inEnd);
 
-        int rootValue = preorder[preStart];
-        TreeNode root = new TreeNode(rootValue);
-
-        int index = 0;
-        for (int i = inStart; i <= inEnd; i++) {
-            if (inorder[i] == rootValue) {
-                index = i;
-                break;
-            }
-        }
-        int leftSize = index - inStart;
-
-        root.left = dfs(preorder, preStart + 1, preStart + leftSize,
-                inorder, inStart, index - 1);
-        root.right = dfs(preorder, preStart + leftSize + 1, preEnd,
-                inorder, index + 1, inEnd);
-
-        return root;
-    }
-
+    return root;
+  }
 }
-

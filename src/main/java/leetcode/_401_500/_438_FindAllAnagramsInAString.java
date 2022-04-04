@@ -37,57 +37,56 @@ s and p consist of lowercase English letters.
  */
 public class _438_FindAllAnagramsInAString {
 
-    public static void main(String[] args) {
-        System.out.println("[0, 6] == " + new FindAnagrams().findAnagrams("cbaebabacd", "abc"));
-        System.out.println("[0, 1, 2] == " + new FindAnagrams().findAnagrams("abab", "ab"));
+  public static void main(String[] args) {
+    System.out.println("[0, 6] == " + new FindAnagrams().findAnagrams("cbaebabacd", "abc"));
+    System.out.println("[0, 1, 2] == " + new FindAnagrams().findAnagrams("abab", "ab"));
+  }
+
+  public List<Integer> findAnagrams(String s, String p) {
+    List<Integer> result = new ArrayList<>();
+
+    if (s == null || p == null || s.length() == 0 || p.length() == 0) {
+      return result;
     }
 
-    public List<Integer> findAnagrams(String s, String p) {
-        List<Integer> result = new ArrayList<>();
-
-        if (s == null || p == null || s.length() == 0 || p.length() == 0) {
-            return result;
-        }
-
-        if (p.length() > s.length()) {
-            return result;
-        }
-
-        Map<Character, Integer> map = new HashMap<>();
-        for (char c : p.toCharArray()) {
-            map.put(c, map.getOrDefault(c, 0) + 1);
-        }
-
-        int start = 0, end = 0;
-        int count = map.size();
-        while (end < s.length()) {
-            char c = s.charAt(end);
-
-            if (map.containsKey(c)) {
-                map.put(c, map.get(c) - 1);
-                if (map.get(c) == 0) count--;
-            }
-
-            while (count == 0) {
-                char startC = s.charAt(start);
-
-                if (map.containsKey(startC)) {
-                    map.put(startC, map.get(startC) + 1);
-                    if (map.get(startC) > 0) {
-                        count++;
-                    }
-                }
-
-                if (end - start + 1 == p.length()) {
-                    result.add(start);
-                }
-
-                start++;
-            }
-            end++;
-        }
-
-        return result;
+    if (p.length() > s.length()) {
+      return result;
     }
 
+    Map<Character, Integer> map = new HashMap<>();
+    for (char c : p.toCharArray()) {
+      map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    int start = 0, end = 0;
+    int count = map.size();
+    while (end < s.length()) {
+      char c = s.charAt(end);
+
+      if (map.containsKey(c)) {
+        map.put(c, map.get(c) - 1);
+        if (map.get(c) == 0) count--;
+      }
+
+      while (count == 0) {
+        char startC = s.charAt(start);
+
+        if (map.containsKey(startC)) {
+          map.put(startC, map.get(startC) + 1);
+          if (map.get(startC) > 0) {
+            count++;
+          }
+        }
+
+        if (end - start + 1 == p.length()) {
+          result.add(start);
+        }
+
+        start++;
+      }
+      end++;
+    }
+
+    return result;
+  }
 }

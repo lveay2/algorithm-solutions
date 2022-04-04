@@ -30,118 +30,117 @@ import java.util.List;
  */
 public class SerializeAndDeserializeBinaryTree {
 
-    public static void main(String[] args) {
-        TreeNode one = new TreeNode(1);
-        TreeNode two = new TreeNode(2);
-        TreeNode three = new TreeNode(3);
-        TreeNode four = new TreeNode(4);
-        TreeNode five = new TreeNode(5);
+  public static void main(String[] args) {
+    TreeNode one = new TreeNode(1);
+    TreeNode two = new TreeNode(2);
+    TreeNode three = new TreeNode(3);
+    TreeNode four = new TreeNode(4);
+    TreeNode five = new TreeNode(5);
 
-        three.left = four;
-        three.right = five;
+    three.left = four;
+    three.right = five;
 
-        one.left = two;
-        one.right = three;
+    one.left = two;
+    one.right = three;
 
-        TreeNode root = one;
+    TreeNode root = one;
 
-        System.out.println(new SerializeAndDeserializeBinaryTree().serialize(root));
+    System.out.println(new SerializeAndDeserializeBinaryTree().serialize(root));
 
-        System.out.println(
-                new SerializeAndDeserializeBinaryTree().deserialize("1, 2, 3, null, null, 4, 5"));
+    System.out.println(
+        new SerializeAndDeserializeBinaryTree().deserialize("1, 2, 3, null, null, 4, 5"));
 
-        System.out.println(new SerializeAndDeserializeBinaryTree().deserialize("-1, 0, 1"));
+    System.out.println(new SerializeAndDeserializeBinaryTree().deserialize("-1, 0, 1"));
 
-        System.out.println(new SerializeAndDeserializeBinaryTree().deserialize(""));
+    System.out.println(new SerializeAndDeserializeBinaryTree().deserialize(""));
+  }
+
+  // Encodes a tree to a single string.
+  public String serialize(TreeNode root) {
+    if (root == null) return "";
+
+    List<TreeNode> list = new ArrayList<>();
+
+    list.add(root);
+
+    for (int i = 0; i < list.size(); i++) {
+      TreeNode node = list.get(i);
+
+      if (node == null) {
+        continue;
+      }
+
+      list.add(node.left);
+
+      list.add(node.right);
     }
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        if (root == null) return "";
-
-        List<TreeNode> list = new ArrayList<>();
-
-        list.add(root);
-
-        for (int i = 0; i < list.size(); i++) {
-            TreeNode node = list.get(i);
-
-            if (node == null) {
-                continue;
-            }
-
-            list.add(node.left);
-
-            list.add(node.right);
-        }
-
-        while (list.get(list.size() - 1) == null) {
-            list.remove(list.size() - 1);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-
-        for (int i = 0; i < list.size(); i++) {
-            TreeNode node = list.get(i);
-
-            if (node == null) {
-                sb.append(", null");
-            } else {
-                if (i != 0) {
-                    sb.append(", ");
-                }
-                sb.append(node.val);
-            }
-        }
-        sb.append("}");
-
-        return sb.toString();
+    while (list.get(list.size() - 1) == null) {
+      list.remove(list.size() - 1);
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if (data == null || data.equals("")) {
-            return null;
+    StringBuilder sb = new StringBuilder();
+    sb.append("{");
+
+    for (int i = 0; i < list.size(); i++) {
+      TreeNode node = list.get(i);
+
+      if (node == null) {
+        sb.append(", null");
+      } else {
+        if (i != 0) {
+          sb.append(", ");
         }
+        sb.append(node.val);
+      }
+    }
+    sb.append("}");
 
-        String[] vals = data.split(",");
+    return sb.toString();
+  }
 
-        ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
-
-        TreeNode root = new TreeNode(Integer.parseInt(vals[0].trim()));
-
-        queue.add(root);
-
-        int index = 0;
-
-        boolean isLeftChild = true;
-
-        for (int i = 1; i < vals.length; i++) {
-            if (!vals[i].trim().equals("null")) {
-                TreeNode node = new TreeNode(Integer.parseInt(vals[i].trim()));
-
-                if (isLeftChild) {
-                    queue.get(index).left = node;
-                } else {
-                    queue.get(index).right = node;
-                }
-
-                queue.add(node);
-            }
-
-            if (!isLeftChild) {
-                index++;
-            }
-
-            isLeftChild = !isLeftChild;
-        }
-
-        System.out.println(new SerializeAndDeserializeBinaryTree().serialize(root));
-
-        return root;
+  // Decodes your encoded data to tree.
+  public TreeNode deserialize(String data) {
+    if (data == null || data.equals("")) {
+      return null;
     }
 
+    String[] vals = data.split(",");
+
+    ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
+
+    TreeNode root = new TreeNode(Integer.parseInt(vals[0].trim()));
+
+    queue.add(root);
+
+    int index = 0;
+
+    boolean isLeftChild = true;
+
+    for (int i = 1; i < vals.length; i++) {
+      if (!vals[i].trim().equals("null")) {
+        TreeNode node = new TreeNode(Integer.parseInt(vals[i].trim()));
+
+        if (isLeftChild) {
+          queue.get(index).left = node;
+        } else {
+          queue.get(index).right = node;
+        }
+
+        queue.add(node);
+      }
+
+      if (!isLeftChild) {
+        index++;
+      }
+
+      isLeftChild = !isLeftChild;
+    }
+
+    System.out.println(new SerializeAndDeserializeBinaryTree().serialize(root));
+
+    return root;
+  }
 }
 
 // Your Codec object will be instantiated and called as such:

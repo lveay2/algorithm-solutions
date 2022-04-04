@@ -23,21 +23,19 @@ The number of nodes in the tree is in the range [0, 104].
  */
 public class _104_MaximumDepthOfBinaryTree {
 
-    public static void main(String[] args) {
-        System.out.println("3 == " + maxDepth(TreeNode.buildTree("3,9,20,null,null,15,7")));
-        System.out.println("2 == " + maxDepth(TreeNode.buildTree("1,null,2")));
+  public static void main(String[] args) {
+    System.out.println("3 == " + maxDepth(TreeNode.buildTree("3,9,20,null,null,15,7")));
+    System.out.println("2 == " + maxDepth(TreeNode.buildTree("1,null,2")));
+  }
+
+  public static int maxDepth(TreeNode root) {
+    if (root == null) {
+      return 0;
     }
 
-    public static int maxDepth(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
+    int left = maxDepth(root.left);
+    int right = maxDepth(root.right);
 
-        int left = maxDepth(root.left);
-        int right = maxDepth(root.right);
-
-
-        return Math.max(left + 1, right + 1);
-    }
-
+    return Math.max(left + 1, right + 1);
+  }
 }

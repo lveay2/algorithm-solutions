@@ -30,51 +30,46 @@ All the given intervals are unique.
  */
 public class _1288_RemoveCoveredIntervals {
 
-    public static void main(String[] args) {
-        System.out.println("2 == " + removeCoveredIntervals(
-                new int[][]{{1, 4}, {3, 6}, {2, 8}})
-        );
-        System.out.println("1 == " + removeCoveredIntervals(
-                new int[][]{{1, 4}, {2, 3}})
-        );
-        System.out.println("1 == " + removeCoveredIntervals(
-                new int[][]{{1, 2}, {1, 4}, {3, 4}})
-        );
-    }
+  public static void main(String[] args) {
+    System.out.println("2 == " + removeCoveredIntervals(new int[][] {{1, 4}, {3, 6}, {2, 8}}));
+    System.out.println("1 == " + removeCoveredIntervals(new int[][] {{1, 4}, {2, 3}}));
+    System.out.println("1 == " + removeCoveredIntervals(new int[][] {{1, 2}, {1, 4}, {3, 4}}));
+  }
 
-    public static int removeCoveredIntervals(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> {
-            if (a[0] == b[0]) {
-                return b[1] - a[1];
-            }
-            return a[0] - b[0];
+  public static int removeCoveredIntervals(int[][] intervals) {
+    Arrays.sort(
+        intervals,
+        (a, b) -> {
+          if (a[0] == b[0]) {
+            return b[1] - a[1];
+          }
+          return a[0] - b[0];
         });
 
-        int start = intervals[0][0];
-        int end = intervals[0][1];
+    int start = intervals[0][0];
+    int end = intervals[0][1];
 
-        int ans = 0;
-        for (int i = 1; i < intervals.length; i++) {
-            int[] intv = intervals[i];
-            // cover
-            if (start <= intv[0] && intv[1] <= end) {
-                ans++;
-                continue;
-            }
+    int ans = 0;
+    for (int i = 1; i < intervals.length; i++) {
+      int[] intv = intervals[i];
+      // cover
+      if (start <= intv[0] && intv[1] <= end) {
+        ans++;
+        continue;
+      }
 
-            // partically overlap
-            if (intv[0] <= end && end <= intv[1]) {
-                end = intv[1];
-            }
+      // partically overlap
+      if (intv[0] <= end && end <= intv[1]) {
+        end = intv[1];
+      }
 
-            // no overlap
-            if (end < intv[0]) {
-                start = intv[0];
-                end = intv[1];
-            }
-        }
-
-        return intervals.length - ans;
+      // no overlap
+      if (end < intv[0]) {
+        start = intv[0];
+        end = intv[1];
+      }
     }
 
+    return intervals.length - ans;
+  }
 }
