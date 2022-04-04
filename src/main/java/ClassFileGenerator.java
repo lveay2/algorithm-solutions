@@ -45,7 +45,7 @@ public class ClassFileGenerator {
   }
 
   private static void createClassFile(
-      String rawName, String packageName, String subFolder, boolean create) {
+      String rawName, String packageName, String subFolder, boolean createNow) {
     rawName = rawName.replaceAll("\n", "").replaceAll("-", " ");
 
     String[] names = rawName.split(" ");
@@ -63,7 +63,7 @@ public class ClassFileGenerator {
         Paths.get("").resolve(Constants.SRC_MAIN_JAVA).resolve(packageName).resolve(subFolder);
     System.out.println("folderPath: " + folderPath + "\n");
 
-    if (create) {
+    if (createNow) {
       ClassFileGeneratorHelper.createProblemFile(folderPath, packageName, subFolder, classFileName);
     }
   }
