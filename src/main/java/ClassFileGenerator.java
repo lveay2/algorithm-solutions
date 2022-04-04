@@ -22,7 +22,7 @@ public class ClassFileGenerator {
     private static boolean create = true;
 
     public static void main(String[] args) throws IOException {
-        String className = "22. Generate Parentheses";
+        String className = "438. Find All Anagrams in a String";
 
         packageName = PACKAGE_LEETCODE;
         subFolder = "";
