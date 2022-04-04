@@ -1,7 +1,5 @@
 package leetcode._401_500;
 
-import leetcode._438_find_all_anagrams_in_a_string.FindAnagrams;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,11 +36,11 @@ s and p consist of lowercase English letters.
 public class _438_FindAllAnagramsInAString {
 
   public static void main(String[] args) {
-    System.out.println("[0, 6] == " + new FindAnagrams().findAnagrams("cbaebabacd", "abc"));
-    System.out.println("[0, 1, 2] == " + new FindAnagrams().findAnagrams("abab", "ab"));
+    System.out.println("[0, 6] == " + findAnagrams("cbaebabacd", "abc"));
+    System.out.println("[0, 1, 2] == " + findAnagrams("abab", "ab"));
   }
 
-  public List<Integer> findAnagrams(String s, String p) {
+  public static List<Integer> findAnagrams(String s, String p) {
     List<Integer> result = new ArrayList<>();
 
     if (s == null || p == null || s.length() == 0 || p.length() == 0) {

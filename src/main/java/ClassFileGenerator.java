@@ -10,7 +10,7 @@ public class ClassFileGenerator {
   private static final String PACKAGE_OA = "oa";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "253. Meeting Rooms II";
+    String problemName = "525. Contiguous Array\n";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
@@ -46,7 +46,7 @@ public class ClassFileGenerator {
 
   private static void createClassFile(
       String rawName, String packageName, String subFolder, boolean create) {
-    rawName = rawName.replace("\n", "").replace("-", " ");
+    rawName = rawName.replaceAll("\n", "").replaceAll("-", " ");
 
     String[] names = rawName.split(" ");
     int number = ClassFileGeneratorHelper.getProblemNumber(names[0].trim());
