@@ -43,16 +43,16 @@ public class ClassFileGeneratorHelper {
   }
 
   public static void createProblemFile(
-      Path folderPath, String packageName, String subFolder, String problemName) {
+      Path folderPath, String packageName, String subFolder, String classFileName) {
     try {
       Files.createDirectories(folderPath);
-      Path filePath = folderPath.resolve(problemName + Constants.JAVA);
+      Path filePath = folderPath.resolve(classFileName + Constants.JAVA);
 
       List<String> contents =
           Arrays.asList(
               "package " + packageName + "." + subFolder + ";\n",
               "/*",
-              "public class " + problemName + " {\n",
+              "public class " + classFileName + " {\n",
               "    public static void main(String[] args) {",
               "      ",
               "    }\n\n",

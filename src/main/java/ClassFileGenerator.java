@@ -10,7 +10,7 @@ public class ClassFileGenerator {
   private static final String PACKAGE_OA = "oa";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "438. Find All Anagrams in a String\n";
+    String problemName = "452. Minimum Number of Arrows to Burst Balloons";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
@@ -22,7 +22,7 @@ public class ClassFileGenerator {
 
   // example className: 435. Non-overlapping Intervals\n
   private static void createLeetCodeProblemFile(String problemName) {
-    createClassFile(problemName, PACKAGE_LEETCODE, "", false);
+    createClassFile(problemName, PACKAGE_LEETCODE, "", true);
   }
 
   // example className: 1495 · Leaf-Similar Trees
@@ -64,7 +64,7 @@ public class ClassFileGenerator {
     System.out.println("folderPath: " + folderPath + "\n");
 
     if (create) {
-      ClassFileGeneratorHelper.createProblemFile(folderPath, packageName, subFolder, problemName);
+      ClassFileGeneratorHelper.createProblemFile(folderPath, packageName, subFolder, classFileName);
     }
   }
 }
