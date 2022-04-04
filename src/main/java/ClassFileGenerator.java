@@ -20,7 +20,7 @@ public class ClassFileGenerator {
   private static String JAVA = ".java";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "438. Find All Anagrams in a String";
+    String problemName = "438. Find All Anagrams in a String\n";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
@@ -64,11 +64,11 @@ public class ClassFileGenerator {
 
     String classFileName =
         number != -1 ? UNDER_SCORE + number + UNDER_SCORE + problemName : problemName;
-    System.out.println(classFileName + JAVA);
+    System.out.println("classFileName: " + classFileName + JAVA);
 
     subFolder = getSubFolder(subFolder, number);
     Path folderPath = Paths.get("").resolve(SRC_MAIN_JAVA).resolve(packageName).resolve(subFolder);
-    System.out.println(folderPath);
+    System.out.println("folderPath: " + folderPath + "\n");
 
     if (create) {
       createProblemFile(folderPath, packageName, subFolder, problemName);
