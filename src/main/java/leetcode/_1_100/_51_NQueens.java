@@ -28,6 +28,7 @@ public class _51_NQueens {
     static List<List<String>> result = new ArrayList<>();
 
     public static List<List<String>> solveNQueens(int n) {
+        result = new ArrayList<>();
         char[][] board = new char[n][n];
         for (char[] row : board) {
             Arrays.fill(row, '.');
@@ -87,5 +88,6 @@ public class _51_NQueens {
     public static void main(String[] args) {
         System.out.println("[[.Q.., ...Q, Q..., ..Q.], [..Q., Q..., ...Q, .Q..]] " +
                 "equals\n" + solveNQueens(4));
+        System.out.println("[[Q]] equals " + solveNQueens(1));
     }
 }
