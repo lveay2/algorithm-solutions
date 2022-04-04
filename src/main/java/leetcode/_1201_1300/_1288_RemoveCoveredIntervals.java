@@ -37,6 +37,9 @@ public class _1288_RemoveCoveredIntervals {
         System.out.println("1 == " + removeCoveredIntervals(
                 new int[][]{{1, 4}, {2, 3}})
         );
+        System.out.println("1 == " + removeCoveredIntervals(
+                new int[][]{{1, 2}, {1, 4}, {3, 4}})
+        );
     }
 
     public static int removeCoveredIntervals(int[][] intervals) {
@@ -54,18 +57,18 @@ public class _1288_RemoveCoveredIntervals {
         for (int i = 1; i < intervals.length; i++) {
             int[] intv = intervals[i];
             // cover
-            if (start <= intv[0] && end >= intv[1]) {
+            if (start <= intv[0] && intv[1] <= end) {
                 ans++;
                 continue;
             }
 
             // partically overlap
-            if (end >= intv[0] && end <= intv[1]) {
+            if (intv[0] <= end && end <= intv[1]) {
                 end = intv[1];
             }
 
             // no overlap
-            if (end < intv[1]) {
+            if (end < intv[0]) {
                 start = intv[0];
                 end = intv[1];
             }
