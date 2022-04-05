@@ -62,17 +62,16 @@ public class _986_IntervalListIntersections {
     while (i < m && j < n) {
       int a1 = firstList[i][0], a2 = firstList[i][1];
       int b1 = secondList[j][0], b2 = secondList[j][1];
+      //      System.out.println("a:[" + a1 + ", " + a2 + "], b:[" + b1 + ", " + b2 + "]");
 
-      if (b2 >= a1 && a2 >= b1) {
-        int start = Math.max(a1, b1);
-        int end = Math.min(a2, b2);
-        ans.add(new int[] {start, end});
+      if (b1 <= a2 && a1 <= b2) {
+        ans.add(new int[] {Math.max(a1, b1), Math.min(a2, b2)});
       }
 
-      if (a2 > b2) {
-        j++;
-      } else {
+      if (a2 < b2) {
         i++;
+      } else {
+        j++;
       }
     }
 
