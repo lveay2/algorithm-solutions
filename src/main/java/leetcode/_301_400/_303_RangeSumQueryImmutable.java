@@ -40,6 +40,45 @@ public class _303_RangeSumQueryImmutable {
     System.out.println("1 == " + na.sumRange(0, 2));
     System.out.println("-1 == " + na.sumRange(2, 5));
     System.out.println("-3 == " + na.sumRange(0, 5));
+
+    NumArray2 na2 = new NumArray2(new int[] {-2, 0, 3, -5, 2, -1});
+    System.out.println(na2);
+    System.out.println("1 == " + na2.sumRange(0, 2));
+    System.out.println("-1 == " + na2.sumRange(2, 5));
+    System.out.println("-3 == " + na2.sumRange(0, 5));
+    System.out.println("1 == " + na2.sumRange(4, 5));
+
+  }
+
+  static class NumArray2 {
+
+    int[] presum = null;
+    int[] numArray = null;
+
+    public NumArray2(int[] nums) {
+      numArray = nums;
+      int n = nums.length;
+      presum = new int[n + 1];
+      for (int i = 1; i < n + 1; i++) {
+        presum[i] = presum[i - 1] + nums[i - 1];
+      }
+    }
+
+    // nums     -2  0 3 -5  2 -1
+    // presum 0 -2 -2 1 -4 -2 -3
+    public int sumRange(int left, int right) {
+      return presum[right + 1] - presum[left];
+    }
+
+    @Override
+    public String toString() {
+      return "NumArray{"
+          + "presum="
+          + Arrays.toString(presum)
+          + ", numArray="
+          + Arrays.toString(numArray)
+          + '}';
+    }
   }
 
   static class NumArray {
