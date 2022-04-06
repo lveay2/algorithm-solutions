@@ -56,9 +56,9 @@ public class ClassFileGeneratorHelper {
               "package " + packageName + "." + subFolder + ";\n",
               "/*",
               "public class " + classFileName + " {\n",
-              "    public static void main(String[] args) {",
-              "      ",
-              "    }\n\n",
+              "  public static void main(String[] args) {",
+              "    ",
+              "  }\n\n",
               "}");
 
       Files.write(
