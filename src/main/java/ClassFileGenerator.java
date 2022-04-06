@@ -10,7 +10,7 @@ public class ClassFileGenerator {
   private static final String PACKAGE_OA = "oa";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "303. Range Sum Query - Immutable";
+    String problemName = "304. Range Sum Query 2D - Immutable\n";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
