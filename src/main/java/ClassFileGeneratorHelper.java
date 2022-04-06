@@ -12,6 +12,9 @@ public class ClassFileGeneratorHelper {
   public static String getProblemName(String[] names, int number) {
     StringBuilder problemNameBuilder = new StringBuilder();
     for (int i = 0; i < names.length; i++) {
+      if (names[i] == null || names[i].trim().isEmpty()) {
+        continue;
+      }
       if (number != -1 && i == 0) {
         continue;
       }
