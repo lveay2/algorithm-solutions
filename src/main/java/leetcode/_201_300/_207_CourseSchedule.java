@@ -43,6 +43,13 @@ public class _207_CourseSchedule {
     System.out.println("true == " + canFinish(2, new int[][] {{1, 0}}));
     System.out.println("false == " + canFinish(2, new int[][] {{1, 0}, {0, 1}}));
     System.out.println("true == " + canFinish(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
+    System.out.println(
+        "false == "
+            + canFinish(
+                20,
+                new int[][] {
+                  {0, 10}, {3, 18}, {5, 5}, {6, 11}, {11, 14}, {13, 1}, {15, 1}, {17, 4}
+                }));
 
     System.out.println("true == " + canFinishBFS(2, new int[][] {{1, 0}}));
     System.out.println("false == " + canFinishBFS(2, new int[][] {{1, 0}, {0, 1}}));
