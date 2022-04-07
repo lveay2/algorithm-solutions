@@ -54,10 +54,9 @@ public class _207_CourseSchedule {
     System.out.println("false == " + canFinish(2, new int[][] {{1, 1}}));
 
     System.out.println("\ncanFinishBFS");
-    System.out.println("canFinishBFS true == " + canFinishBFS(2, new int[][] {{1, 0}}));
-    System.out.println("canFinishBFS false == " + canFinishBFS(2, new int[][] {{1, 0}, {0, 1}}));
-    System.out.println(
-        "canFinishBFS true == " + canFinishBFS(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
+    System.out.println("true == " + canFinishBFS(2, new int[][] {{1, 0}}));
+    System.out.println("false == " + canFinishBFS(2, new int[][] {{1, 0}, {0, 1}}));
+    System.out.println("true == " + canFinishBFS(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
   }
 
   public static boolean canFinish(int numCourses, int[][] prerequisites) {
