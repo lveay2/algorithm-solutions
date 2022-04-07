@@ -40,6 +40,7 @@ public class _207_CourseSchedule {
   static boolean hasCycle = false;
 
   public static void main(String[] args) {
+    System.out.println("canFinish");
     System.out.println("true == " + canFinish(2, new int[][] {{1, 0}}));
     System.out.println("false == " + canFinish(2, new int[][] {{1, 0}, {0, 1}}));
     System.out.println("true == " + canFinish(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
@@ -50,10 +51,13 @@ public class _207_CourseSchedule {
                 new int[][] {
                   {0, 10}, {3, 18}, {5, 5}, {6, 11}, {11, 14}, {13, 1}, {15, 1}, {17, 4}
                 }));
+    System.out.println("false == " + canFinish(2, new int[][] {{1, 1}}));
 
-    System.out.println("true == " + canFinishBFS(2, new int[][] {{1, 0}}));
-    System.out.println("false == " + canFinishBFS(2, new int[][] {{1, 0}, {0, 1}}));
-    System.out.println("true == " + canFinishBFS(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
+    System.out.println("\ncanFinishBFS");
+    System.out.println("canFinishBFS true == " + canFinishBFS(2, new int[][] {{1, 0}}));
+    System.out.println("canFinishBFS false == " + canFinishBFS(2, new int[][] {{1, 0}, {0, 1}}));
+    System.out.println(
+        "canFinishBFS true == " + canFinishBFS(4, new int[][] {{1, 0}, {2, 0}, {3, 1}, {3, 2}}));
   }
 
   public static boolean canFinish(int numCourses, int[][] prerequisites) {
@@ -89,7 +93,7 @@ public class _207_CourseSchedule {
   }
 
   private static List<Integer>[] buildGraph(int numCourses, int[][] prerequisites) {
-    List<Integer>[] graph = new List[numCourses];
+    List<Integer>[] graph = new LinkedList[numCourses];
     for (int i = 0; i < numCourses; i++) {
       graph[i] = new LinkedList<>();
     }
