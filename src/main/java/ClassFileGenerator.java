@@ -10,7 +10,7 @@ public class ClassFileGenerator {
   private static final String PACKAGE_OA = "oa";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "953. Verifying an Alien Dictionary";
+    String problemName = "1428. Leftmost Column with at Least a One\n";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
