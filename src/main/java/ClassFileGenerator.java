@@ -10,7 +10,7 @@ public class ClassFileGenerator {
   private static final String PACKAGE_OA = "oa";
 
   public static void main(String[] args) throws IOException {
-    String problemName = "680. Valid Palindrome II";
+    String problemName = "560. Subarray Sum Equals K";
     createLeetCodeProblemFile(problemName);
 
     problemName = "1495 · Leaf-Similar Trees";
