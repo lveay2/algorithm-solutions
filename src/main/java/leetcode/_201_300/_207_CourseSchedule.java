@@ -60,7 +60,7 @@ public class _207_CourseSchedule {
   }
 
   public static boolean canFinish(int numCourses, int[][] prerequisites) {
-    List<Integer>[] graph = buildGraph(numCourses, prerequisites);
+    List[] graph = buildGraph(numCourses, prerequisites);
 
     visited = new boolean[numCourses];
     onPath = new boolean[numCourses];
@@ -91,10 +91,10 @@ public class _207_CourseSchedule {
     onPath[i] = false;
   }
 
-  private static List<Integer>[] buildGraph(int numCourses, int[][] prerequisites) {
-    List<Integer>[] graph = new LinkedList[numCourses];
+  private static List[] buildGraph(int numCourses, int[][] prerequisites) {
+    List[] graph = new List[numCourses];
     for (int i = 0; i < numCourses; i++) {
-      graph[i] = new LinkedList<>();
+      graph[i] = new LinkedList<Integer>();
     }
 
     for (int[] pre : prerequisites) {

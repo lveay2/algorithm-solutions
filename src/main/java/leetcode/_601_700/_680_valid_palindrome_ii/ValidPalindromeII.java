@@ -14,6 +14,7 @@ package leetcode._601_700._680_valid_palindrome_ii;
 public class ValidPalindromeII {
 
   public static void main(String[] args) {
+    System.out.println("true == " + new ValidPalindromeII().validPalindrome("cbbcc"));
     System.out.println("true == " + new ValidPalindromeII().validPalindrome("yd"));
     System.out.println("true == " + new ValidPalindromeII().validPalindrome("aba"));
     System.out.println("true == " + new ValidPalindromeII().validPalindrome("abca"));
