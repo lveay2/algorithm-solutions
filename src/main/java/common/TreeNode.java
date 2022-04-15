@@ -56,11 +56,11 @@ public class TreeNode {
   static TreeNode found = null;
   public static TreeNode getNode(TreeNode root, int val) {
     found = null;
-    dfs(root, val);
+    getNodeDfs(root, val);
     return found;
   }
 
-  private static void dfs(TreeNode root, int val) {
+  private static void getNodeDfs(TreeNode root, int val) {
     if (root == null) {
       return;
     }
@@ -72,8 +72,8 @@ public class TreeNode {
       return;
     }
 
-    dfs(root.left, val);
-    dfs(root.right, val);
+    getNodeDfs(root.left, val);
+    getNodeDfs(root.right, val);
   }
 
 
