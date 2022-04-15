@@ -11,6 +11,7 @@ public class TreeNode {
   public TreeNode left;
   public TreeNode right;
   public TreeNode next;
+  public TreeNode parent;
   List<Integer> values = new ArrayList<>();
 
   public TreeNode(int x) {
@@ -35,6 +36,7 @@ public class TreeNode {
       i++;
       if (i < l && !values[i].equals("null") && !values[i].equals("#")) {
         TreeNode leftNode = new TreeNode(Integer.parseInt(values[i]));
+        leftNode.parent = node;
         queue.offer(leftNode);
         node.left = leftNode;
       }
@@ -42,6 +44,7 @@ public class TreeNode {
       i++;
       if (i < l && !values[i].equals("null") && !values[i].equals("#")) {
         TreeNode rightNode = new TreeNode(Integer.parseInt(values[i]));
+        rightNode.parent = node;
         queue.offer(rightNode);
         node.right = rightNode;
       }
