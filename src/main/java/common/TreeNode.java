@@ -50,6 +50,30 @@ public class TreeNode {
     return root;
   }
 
+  static TreeNode found = null;
+  public static TreeNode getNode(TreeNode root, int val) {
+    found = null;
+    dfs(root, val);
+    return found;
+  }
+
+  private static void dfs(TreeNode root, int val) {
+    if (root == null) {
+      return;
+    }
+    if (root.val == val) {
+      found = root;
+      return;
+    }
+    if (found != null) {
+      return;
+    }
+
+    dfs(root.left, val);
+    dfs(root.right, val);
+  }
+
+
   // level order traversal using 'next' pointer
   public void printLevelOrder() {
     TreeNode nextLevelRoot = this;
