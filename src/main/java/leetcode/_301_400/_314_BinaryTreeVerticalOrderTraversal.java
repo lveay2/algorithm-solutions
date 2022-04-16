@@ -33,45 +33,49 @@ public class _314_BinaryTreeVerticalOrderTraversal {
   public static void main(String[] args) {
     System.out.println("[[2], [1], [3]] ==\n" + verticalOrder(TreeNode.buildTree("1,2,3")));
     System.out.println(
-        "[[9], [3, 15], [20], [7]] ==\n" + verticalOrder(TreeNode.buildTree("3,9,20,null,null,15,7")));
+        "[[9], [3, 15], [20], [7]] ==\n"
+            + verticalOrder(TreeNode.buildTree("3,9,20,null,null,15,7")));
     System.out.println(
-        "[[4], [9], [3, 0, 1], [8], [7]] ==\n" + verticalOrder(TreeNode.buildTree("3,9,8,4,0,1,7")));
+        "[[4], [9], [3, 0, 1], [8], [7]] ==\n"
+            + verticalOrder(TreeNode.buildTree("3,9,8,4,0,1,7")));
     System.out.println(
         "[[4], [9, 5], [3, 0, 1], [8, 2], [7]] ==\n"
             + verticalOrder(TreeNode.buildTree("3,9,8,4,0,1,7,null,null,null,2,5")));
+    System.out.println("[] == " + verticalOrder(null));
   }
 
   public static List<List<Integer>> verticalOrder(TreeNode root) {
-    if (root == null) {
-      return Collections.emptyList();
-    }
     List<List<Integer>> result = new ArrayList<>();
+    if (root == null) {
+      return result;
+    }
 
     Queue<TreeNode> queue = new LinkedList<>();
     queue.offer(root);
+    Map<TreeNode, Integer> node2Col = new HashMap<>();
+    node2Col.put(root, 0);
 
-    Map<TreeNode, Integer> n2c = new HashMap<>();
-    n2c.put(root, 0);
-
-    Map<Integer, List<Integer>> col2List = new TreeMap<>();
-
+    Map<Integer, List<Integer>> col2List = new HashMap<>();
     int min = Integer.MAX_VALUE;
     while (!queue.isEmpty()) {
-      TreeNode node = queue.poll();
-      int col = n2c.get(node);
-      min = Math.min(min, col);
+      int n = queue.size();
 
-      col2List.putIfAbsent(col, new ArrayList<>());
-      col2List.get(col).add(node.val);
+      for (int i = 0; i < n; i++) {
+        TreeNode node = queue.poll();
 
-      if (node.left != null) {
-        queue.offer(node.left);
-        n2c.put(node.left, col - 1);
-      }
+        int col = node2Col.get(node);
+        col2List.putIfAbsent(col, new ArrayList<>());
+        col2List.get(col).add(node.val);
+        min = Math.min(min, col);
 
-      if (node.right != null) {
-        queue.offer(node.right);
-        n2c.put(node.right, col + 1);
+        if (node.left != null) {
+          queue.offer(node.left);
+          node2Col.put(node.left, col - 1);
+        }
+        if (node.right != null) {
+          queue.offer(node.right);
+          node2Col.put(node.right, col + 1);
+        }
       }
     }
 
