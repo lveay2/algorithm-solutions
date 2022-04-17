@@ -19,6 +19,7 @@ public class _04_volatile {
     // volatile is used to prevent threads caching the variable in its own thread
     private volatile boolean running = true;
 
+    @Override
     public void run() {
       while (running) {
         System.out.println("Hello");
