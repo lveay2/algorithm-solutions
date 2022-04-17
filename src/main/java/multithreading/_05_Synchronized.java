@@ -7,7 +7,8 @@ public class _05_Synchronized {
   private AtomicInteger atomicInteger = new AtomicInteger(0);
 
   private int count;
-  // intrinsic lock or monitor lock
+  // synchronized -> intrinsic lock or monitor lock
+  // https://docs.oracle.com/javase/tutorial/essential/concurrency/locksync.html
   private synchronized void increment() {
     count++;
   }
