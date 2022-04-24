@@ -59,18 +59,18 @@ public class TriangleCircle {
 
   private static boolean isBlock(int xmin, int ymin, int xmax, int ymax, int width, int height) {
     if (xmin <= 0 && xmax >= width) {
-      return false;
+      return true;
     }
     if (ymin <= 0 && ymax >= height) {
-      return false;
+      return true;
     }
     if (xmin <= 0 && ymin <= 0) {
-      return false;
+      return true;
     }
     if (xmax >= width && ymax >= height) {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
   private static Map<Integer, List<Integer>> buildGraph(List<Circle> circles) {
