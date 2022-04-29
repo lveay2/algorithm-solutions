@@ -3,15 +3,16 @@ package oa.karat;
 import java.util.*;
 
 /*
-
 You are analyzing data for Aquaintly, a hot new social network.
 
-One of the fun features of Aquaintly is that users can rate movies they have seen from 1 to 5. We want to use these ratings to make movie recommendations.
+One of the fun features of Aquaintly is that users can rate movies they have
+seen from 1 to 5. We want to use these ratings to make movie recommendations.
 
 Ratings will be provided in the following format:
   [Member Name, Movie Name, Rating]
 
-We consider two users to have similar taste in movies if they have both rated the same movie as 4 or 5.
+We consider two users to have similar taste in movies if they have both rated
+the same movie as 4 or 5.
 
 A movie should be recommended to a user if:
 - They haven't rated the movie
