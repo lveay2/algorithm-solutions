@@ -59,7 +59,7 @@ R = number of ratings
 M = number of movies
 U = number of users
 */
-public class MovieRecommandation {
+public class MovieRecommendation {
     public static void main(String[] argv) {
         String[][] ratings = {
                 {"Alice", "Frozen", "5"},

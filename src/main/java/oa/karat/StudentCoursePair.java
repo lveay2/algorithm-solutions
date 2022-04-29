@@ -36,7 +36,6 @@ find_pairs(student_course_pairs_1) =>
  "17,25": []
 }
 
-
 Additional test cases:
 
 Sample Input:
@@ -51,8 +50,6 @@ student_course_pairs_2 = [
  ["3", "Course 2"],
  ["4", "Algorithms"]
 ]
-
-
 
 Sample output:
 
@@ -77,7 +74,6 @@ student_course_pairs_3 = [
  ["2", "Art History"],
  ["33", "Another"],
 ]
-
 
 Sample output:
 
