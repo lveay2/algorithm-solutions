@@ -18,17 +18,13 @@ public class Invoicer {
   //     {"invoice_time": 1, "name": "Bob", "amount": 100},
   // ]
   // invoicer.send_emails(customer_invoices)
-  static TreeMap<Integer, String> time2Type = new TreeMap<>();
+  static Map<Integer, String> time2Type = new TreeMap<>();
 
   public Invoicer() {}
 
   public static Invoicer newInstance(Map<Integer, String> sendSchedule) {
+    time2Type = sendSchedule;
     Invoicer invoicer = new Invoicer();
-    for (Map.Entry<Integer, String> entry : sendSchedule.entrySet()) {
-      time2Type.put(entry.getKey(), entry.getValue());
-    }
-    // System.out.println(time2Type);
-
     return invoicer;
   }
 

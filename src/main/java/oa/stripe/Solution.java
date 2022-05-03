@@ -96,7 +96,7 @@ import java.util.*;
 
 class Solution {
   public static void main(String[] args) {
-    Map<Integer, String> sendSchedule = new HashMap<>();
+    Map<Integer, String> sendSchedule = new TreeMap<>();
     sendSchedule.put(-10, "Upcoming");
     sendSchedule.put(0, "New");
     sendSchedule.put(20, "Reminder");
