@@ -53,13 +53,28 @@ public class SpreadSheet {
         spreadSheet.toString();
         System.out.println(spreadSheet.updateCell("B3", "=0"));
         spreadSheet.toString();
+
+        System.out.println();
+        SpreadSheet spreadSheet2 = new SpreadSheet();
+        spreadSheet2.toString();
+        System.out.println(spreadSheet2.updateCell("A1", "=A2"));
+        spreadSheet2.toString();
+        System.out.println(spreadSheet2.updateCell("A2", "=A1"));
+        spreadSheet2.toString();
+        System.out.println(spreadSheet2.updateCell("A2", "1"));
+        spreadSheet2.toString();
+        System.out.println(spreadSheet2.updateCell("A1", "3"));
+        spreadSheet2.toString();
     }
 
 
-    Map<String, Cell> sheet = new HashMap<>();
-    Map<String, Set<String>> trigger = new HashMap<>();
+    Map<String, Cell> sheet;
+    Map<String, Set<String>> trigger;
 
-    public SpreadSheet() {}
+    public SpreadSheet() {
+        this.sheet = new HashMap<>();
+        this.trigger = new HashMap<>();
+    }
 
     public int updateCell(String key, String value) {
         Cell cell = sheet.getOrDefault(key, new Cell());
@@ -89,6 +104,7 @@ public class SpreadSheet {
             return;
         }
         Queue<String> queue = new LinkedList<>(trigger.get(cell.key));
+        Set<String> dup = new HashSet<>(trigger.get(cell.key));
 
         while(!queue.isEmpty()) {
             int size = queue.size();
@@ -98,11 +114,12 @@ public class SpreadSheet {
                 Cell current = sheet.get(key);
                 current.value = calculateFormular(current);
 
-                if (!trigger.containsKey(key)) {
+                if (!trigger.containsKey(key) || dup.contains(key)) {
                     continue;
                 }
 
                 queue.addAll(trigger.get(key));
+                dup.add(key);
             }
         }
     }
@@ -162,7 +179,6 @@ public class SpreadSheet {
         public String toString() {
             return value + " " + formular;
         }
-
     }
 
 }
