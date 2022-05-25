@@ -42,28 +42,29 @@ words[i] consists of only lowercase English letters.
 public class _269_AlienDictionary {
 
   public static void main(String[] args) {
-    System.out.println(alienOrder(Arrays.asList("a", "b", "c")));
-    System.out.println(alienOrder(Arrays.asList("uber", "car", "cap")));
-    System.out.println(alienOrder(Arrays.asList("uber", "car", "cap", "car")));
-    System.out.println(alienOrder(Arrays.asList("wrt", "wrf", "er", "ett", "rftt")));
-    System.out.println(alienOrder(Arrays.asList("z", "x")));
-    System.out.println(alienOrder(Arrays.asList("z", "x", "z")));
-    System.out.println(alienOrder(Arrays.asList("z", "z")));
-    System.out.println(alienOrder(Arrays.asList("z", "z", "z")));
-    System.out.println(alienOrder(Arrays.asList("wrt", "wrtkj")));
+    System.out.println("abc == " + alienOrder(Arrays.asList("a", "b", "c")));
+    System.out.println("abruepc == " + alienOrder(Arrays.asList("uber", "car", "cap")));
+    System.out.println(" == " + alienOrder(Arrays.asList("uber", "car", "cap", "car")));
+    System.out.println("wertf == " + alienOrder(Arrays.asList("wrt", "wrf", "er", "ett", "rftt")));
+    System.out.println("zx == " + alienOrder(Arrays.asList("z", "x")));
+    System.out.println(" == " + alienOrder(Arrays.asList("z", "x", "z")));
+    System.out.println("z == " + alienOrder(Arrays.asList("z", "z")));
+    System.out.println("z == " + alienOrder(Arrays.asList("z", "z", "z")));
+    System.out.println("wrtkj == " + alienOrder(Arrays.asList("wrt", "wrtkj")));
+    System.out.println(" == " + alienOrder(Arrays.asList("wrtkj", "wrt")));
+    System.out.println("azcb == " + alienOrder(Arrays.asList("za","zb","ca","cb")));
   }
 
   public static String alienOrder(List<String> inputs) {
-    Map<Character, Character> pairs = findPairs(inputs);
-    if (pairs.isEmpty()) {
-      return "";
-    }
-
-    Set<Character> allLetters = findAllLetters(inputs);
     Map<Character, Integer> indegrees = new HashMap<>();
-    Map<Character, Set<Character>> graph = buildGraph(pairs, indegrees);
+    Set<Character> allLetters = findAllLetters(inputs, indegrees);
+
+    Map<Character, Set<Character>> graph = buildGraph(inputs, indegrees);
 //    System.out.println("indegrees: " + indegrees);
 
+    if (graph.isEmpty()) {
+      return "";
+    }
 
     Queue<Character> queue = new LinkedList<>();
     Set<Character> visited = new HashSet<>();
@@ -109,51 +110,14 @@ public class _269_AlienDictionary {
     return sb.toString();
   }
 
-  public static Map<Character, Character> findPairs(List<String> inputs) {
-    Map<Character, Character> pairs = new HashMap<>();
-    Set<String> visited = new HashSet<>();
-    int n = inputs.size();
-    for (int i = 0; i < n - 1; i++) {
-      String current = inputs.get(i);
-      visited.add(current);
-      String next = inputs.get(i + 1);
-
-      if (current.equals(next)) {
-        pairs.put(current.charAt(0), current.charAt(0));
-        continue;
-      }
-
-      if (visited.contains(next)) {
-        return new HashMap<>();
-      }
-      // uber uber, ub ube
-      int p = 0, q = 0;
-      while (p < current.length() && q < next.length()) {
-        char cc = current.charAt(p);
-        char nc = next.charAt(q);
-        if (cc == nc) {
-          p++;
-          q++;
-          continue;
-        }
-        pairs.put(cc, nc);
-        break;
-      }
-
-      if (q < next.length() - 1) {
-        pairs.put(next.charAt(q), next.charAt(q));
-      }
-    }
-//    System.out.println("pairs: " + pairs);
-
-    return pairs;
-  }
-
-  public static Set<Character> findAllLetters(List<String> inputs) {
+  public static Set<Character> findAllLetters(List<String> inputs, Map<Character, Integer> indegrees) {
     Set<Character> allLetters = new HashSet<>();
     for (String word : inputs) {
       for (char c : word.toCharArray()) {
         allLetters.add(c);
+        if (!indegrees.containsKey(c)) {
+          indegrees.put(c, 0);
+        }
       }
     }
 //    System.out.println("allLetters: " + allLetters);
@@ -162,25 +126,42 @@ public class _269_AlienDictionary {
 
   //         Map<Character, Set<Character>> graph = buildGraph(pairs, indegrees);
   public static Map<Character, Set<Character>> buildGraph(
-      Map<Character, Character> pairs, Map<Character, Integer> indegrees) {
+      List<String> inputs, Map<Character, Integer> indegrees) {
     Map<Character, Set<Character>> graph = new HashMap<>();
-    for (Map.Entry<Character, Character> e : pairs.entrySet()) {
-      char fromChar = e.getKey();
-      char toChar = e.getValue();
+    Set<String> visited = new HashSet<>();
+    int n = inputs.size();
+    for (int i = 0; i < n - 1; i++) {
+      String current = inputs.get(i);
+      String next = inputs.get(i + 1);
+      visited.add(current);
 
-      if (!graph.containsKey(fromChar)) {
-        graph.put(fromChar, new HashSet<>());
-        indegrees.putIfAbsent(fromChar, 0);
+      if (current.startsWith(next) && current.length() > next.length()) {
+        return Collections.emptyMap();
       }
-      graph.get(fromChar).add(toChar);
 
-      if (!indegrees.containsKey(toChar)) {
-        indegrees.put(toChar, 0);
+      if (current.equals(next)) {
+        continue;
       }
-      indegrees.put(toChar, indegrees.get(toChar) + 1);
+
+      if (visited.contains(next)) {
+        return Collections.emptyMap();
+      }
+
+      int minLength = Math.min(current.length(), next.length());
+      for (int j = 0; j < minLength; j++) {
+        char cc = current.charAt(j);
+        char nc = next.charAt(j);
+
+        if (cc != nc) {
+          if (!graph.containsKey(cc)) {
+            graph.put(cc, new HashSet<>());
+          }
+          graph.get(cc).add(nc);
+          indegrees.put(nc, indegrees.get(nc) + 1);
+          break;
+        }
+      }
     }
-//    System.out.println("graph: " + graph);
-
     return graph;
   }
 }
