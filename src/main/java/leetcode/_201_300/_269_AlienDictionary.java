@@ -50,9 +50,12 @@ public class _269_AlienDictionary {
     System.out.println(" == " + alienOrder(Arrays.asList("z", "x", "z")));
     System.out.println("z == " + alienOrder(Arrays.asList("z", "z")));
     System.out.println("z == " + alienOrder(Arrays.asList("z", "z", "z")));
-    System.out.println("wrtkj == " + alienOrder(Arrays.asList("wrt", "wrtkj")));
+    System.out.println("rwjkt == " + alienOrder(Arrays.asList("wrt", "wrtkj")));
     System.out.println(" == " + alienOrder(Arrays.asList("wrtkj", "wrt")));
     System.out.println("azcb == " + alienOrder(Arrays.asList("za", "zb", "ca", "cb")));
+    System.out.println(" == " + alienOrder(Arrays.asList("aa", "abb", "aba")));
+    System.out.println(" == " + alienOrder(Arrays.asList("z", "x", "a", "zb", "zx")));
+    System.out.println("blnw == " + alienOrder(Arrays.asList("wnlb")));
   }
 
   public static String alienOrder(List<String> inputs) {
@@ -130,21 +133,32 @@ public class _269_AlienDictionary {
       List<String> inputs, Map<Character, Integer> indegrees) {
     Map<Character, Set<Character>> graph = new HashMap<>();
     Set<String> visited = new HashSet<>();
+    Set<Character> visitedChar = new HashSet<>();
     int n = inputs.size();
+    if (n == 1) {
+      String current = inputs.get(0);
+      char cc = current.charAt(0);
+      graph.putIfAbsent(cc, new HashSet<>());
+      graph.get(cc).add(cc);
+      indegrees.put(cc, indegrees.getOrDefault(cc, 0) + 1);
+      return graph;
+    }
+
     for (int i = 0; i < n - 1; i++) {
       String current = inputs.get(i);
       String next = inputs.get(i + 1);
       visited.add(current);
+      visitedChar.add(current.charAt(0));
 
       if (current.startsWith(next) && current.length() > next.length()) {
         return Collections.emptyMap();
       }
 
-      if (current.equals(next)) {
-        continue;
+      if (!current.equals(next) && visited.contains(next)) {
+        return Collections.emptyMap();
       }
 
-      if (visited.contains(next)) {
+      if (current.charAt(0) != next.charAt(0) && visitedChar.contains(next.charAt(0))) {
         return Collections.emptyMap();
       }
 
@@ -153,13 +167,22 @@ public class _269_AlienDictionary {
         char cc = current.charAt(j);
         char nc = next.charAt(j);
 
+        if (!graph.containsKey(cc)) {
+          graph.put(cc, new HashSet<>());
+        }
         if (cc != nc) {
-          if (!graph.containsKey(cc)) {
-            graph.put(cc, new HashSet<>());
+          if (graph.get(nc) != null && graph.get(nc).contains(cc)) {
+            return Collections.emptyMap();
           }
+
           graph.get(cc).add(nc);
           indegrees.put(nc, indegrees.get(nc) + 1);
           break;
+        }
+
+        if (j == minLength - 1) {
+          graph.get(cc).add(nc);
+          indegrees.put(nc, indegrees.get(nc) + 1);
         }
       }
     }
