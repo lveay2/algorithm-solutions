@@ -52,7 +52,7 @@ public class _269_AlienDictionary {
     System.out.println("z == " + alienOrder(Arrays.asList("z", "z", "z")));
     System.out.println("wrtkj == " + alienOrder(Arrays.asList("wrt", "wrtkj")));
     System.out.println(" == " + alienOrder(Arrays.asList("wrtkj", "wrt")));
-    System.out.println("azcb == " + alienOrder(Arrays.asList("za","zb","ca","cb")));
+    System.out.println("azcb == " + alienOrder(Arrays.asList("za", "zb", "ca", "cb")));
   }
 
   public static String alienOrder(List<String> inputs) {
@@ -60,7 +60,7 @@ public class _269_AlienDictionary {
     Set<Character> allLetters = findAllLetters(inputs, indegrees);
 
     Map<Character, Set<Character>> graph = buildGraph(inputs, indegrees);
-//    System.out.println("indegrees: " + indegrees);
+    //    System.out.println("indegrees: " + indegrees);
 
     if (graph.isEmpty()) {
       return "";
@@ -74,8 +74,8 @@ public class _269_AlienDictionary {
         visited.add(e.getKey());
       }
     }
-//    System.out.println("queue: " + queue);
-//    System.out.println("visited: " + visited);
+    //    System.out.println("queue: " + queue);
+    //    System.out.println("visited: " + visited);
 
     StringBuilder sb = new StringBuilder();
 
@@ -85,7 +85,7 @@ public class _269_AlienDictionary {
       for (int i = 0; i < size; i++) {
         Character c = queue.poll();
         sb.append(c);
-//        System.out.println("result: " + result);
+        //        System.out.println("result: " + result);
 
         Set<Character> neighbors = graph.get(c);
         if (neighbors == null || neighbors.isEmpty()) {
@@ -110,7 +110,8 @@ public class _269_AlienDictionary {
     return sb.toString();
   }
 
-  public static Set<Character> findAllLetters(List<String> inputs, Map<Character, Integer> indegrees) {
+  public static Set<Character> findAllLetters(
+      List<String> inputs, Map<Character, Integer> indegrees) {
     Set<Character> allLetters = new HashSet<>();
     for (String word : inputs) {
       for (char c : word.toCharArray()) {
@@ -120,7 +121,7 @@ public class _269_AlienDictionary {
         }
       }
     }
-//    System.out.println("allLetters: " + allLetters);
+    //    System.out.println("allLetters: " + allLetters);
     return allLetters;
   }
 
