@@ -12,6 +12,7 @@ public class _01_Extends {
     Run run2 = new Run();
     // start() will execute the method in its own thread
     run2.start();
+    run2.start();
   }
 
   static class Run extends Thread {
