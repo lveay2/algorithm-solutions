@@ -39,11 +39,11 @@ public class Island {
   // k coordinates
   // 1 2 3 4
   public int[] process(int[][] coordinates) {
+    if (coordinates == null || coordinates.length == 0) {
+      return new int[0];
+    }
     int l = coordinates.length;
     int[] result = new int[l];
-    if (coordinates == null || l == 0) {
-      return result;
-    }
 
     for (int i = 0; i < l; i++) {
       int x = coordinates[i][0];
