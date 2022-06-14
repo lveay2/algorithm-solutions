@@ -2,6 +2,45 @@ package oa.uber;
 
 import java.util.*;
 
+/*
+Given a list of points representing an x, y coordinate, write a function to return the
+number of sparse, unconnected points (orthogonally) at the time each point is added.
+
+Example:
+input: <0,0>
+
+1  X  1  X
+X  1  1  1
+X  X  1  X
+X  X  X  X
+X  X  X  X
+
+<3, 3>
+
+1  X  X  X
+X  X  X  X
+X  X  X  X
+X  X  X  1
+X  X  X  X
+
+<1, 1>
+
+1  X  X  X
+X  1  X  X
+X  X  X  X
+X  X  X  1
+X  X  X  X
+
+<0, 1>
+
+1  1  X  X
+X  1  X  X
+X  X  X  X
+X  X  X  1
+X  X  X  X
+
+Return: < 1, 2, 3, 2>
+*/
 public class Island {
   String[][] matrix;
   int count;
