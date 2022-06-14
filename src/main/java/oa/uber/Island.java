@@ -61,7 +61,7 @@ public class Island {
       this.count = 0;
       for (int row = 0; row < this.r; row++) {
         for (int col = 0; col < this.c; col++) {
-          if (this.matrix[row][col] == "1" && !visited[row][col]) {
+          if (this.matrix[row][col].equals("1") && !visited[row][col]) {
             dfs(row, col, visited);
             this.count++;
           }
