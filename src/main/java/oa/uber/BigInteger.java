@@ -36,18 +36,40 @@ public class BigInteger {
   }
 
   public static void main(String[] args) {
-    System.out.println(
-        new BigInteger("1319").add(new BigInteger("922")).equals(new BigInteger("2241")));
-    System.out.println(
-            new BigInteger("-1319").add(new BigInteger("-922")).equals(new BigInteger("-2241")));
-    System.out.println(
-            new BigInteger("-9").add(new BigInteger("-1")).equals(new BigInteger("-10")));
-    System.out.println(
-            new BigInteger("9").add(new BigInteger("1")).equals(new BigInteger("10")));
-    System.out.println(
-            new BigInteger("9999").add(new BigInteger("1")).equals(new BigInteger("10000")));
-    System.out.println(
-            new BigInteger("-9999").add(new BigInteger("-1")).equals(new BigInteger("-10000")));
+    BigInteger b = new BigInteger("1319").add(new BigInteger("922"));
+    System.out.println(b.toString() + " == 2241");
+    b = new BigInteger("-1319").add(new BigInteger("-922"));
+    System.out.println(b.toString() + " == -2241");
+    b = new BigInteger("9").add(new BigInteger("1"));
+    System.out.println(b.toString() + " == 10");
+    b = new BigInteger("-9").add(new BigInteger("-1"));
+    System.out.println(b.toString() + " == -10");
+    b = new BigInteger("9999").add(new BigInteger("1"));
+    System.out.println(b.toString() + " == 10000");
+    b = new BigInteger("-9999").add(new BigInteger("-1"));
+    System.out.println(b.toString() + " == -10000");
+    b = new BigInteger("-1").add(new BigInteger("-9999"));
+    System.out.println(b.toString() + " == -10000");
+
+    System.out.println();
+    b = new BigInteger("1319").subtract(new BigInteger("922"));
+    System.out.println(b.toString() + " == 397");
+    b = new BigInteger("-1319").subtract(new BigInteger("-922"));
+    System.out.println(b.toString() + " == -397");
+    b = new BigInteger("9").subtract(new BigInteger("1"));
+    System.out.println(b.toString() + " == 8");
+    b = new BigInteger("-9").subtract(new BigInteger("-1"));
+    System.out.println(b.toString() + " == -8");
+    b = new BigInteger("9999").subtract(new BigInteger("1"));
+    System.out.println(b.toString() + " == 9998");
+    b = new BigInteger("-9999").subtract(new BigInteger("-1"));
+    System.out.println(b.toString() + " == -9998");
+    b = new BigInteger("-1").subtract(new BigInteger("-9999"));
+    System.out.println(b.toString() + " == 9998");
+    b = new BigInteger("1111").subtract(new BigInteger("1110"));
+    System.out.println(b.toString() + " == 1");
+    b = new BigInteger("1110").subtract(new BigInteger("1111"));
+    System.out.println(b.toString() + " == -1");
   }
 
   public BigInteger add(BigInteger bigInteger) {
@@ -84,7 +106,9 @@ public class BigInteger {
     } else if (original.contains("-") && add.contains("-")) {
       original = original.substring(1);
       add = add.substring(1);
-      return new BigInteger("-" + subtractOperation(original, add));
+
+      String result = subtractOperation(original, add);
+      return new BigInteger(result.contains("-") ? result.substring(1) : "-" + result);
     }
 
     if (add.contains("-")) {
@@ -96,13 +120,56 @@ public class BigInteger {
     return add(bigInteger);
   }
 
-  private String subtractOperation(String original, String add) {
-
-    return null;
+  private String subtractOperation(String original, String subtracter) {
+    return subtractOperation(original, subtracter, "");
   }
 
+    private String subtractOperation(String original, String subtracter, String prefix) {
+//    System.out.println(original + " - " + subtracter);
+    StringBuilder sb = new StringBuilder();
+
+    int carryOver = 0;
+    int i = original.length() - 1, j = subtracter.length() - 1;
+    while (i >= 0 || j >= 0) {
+      int originalInt = 0;
+      int subtracterInt = 0;
+      if (i >= 0) {
+        originalInt = Integer.parseInt(original.substring(i, i + 1));
+      }
+      if (j >= 0) {
+        subtracterInt = Integer.parseInt(subtracter.substring(j, j + 1));
+      }
+//      System.out.println("---" + originalInt + " " + addInt);
+
+      int sum = originalInt - subtracterInt + carryOver;
+      if (sum < 0) {
+        sum = sum + 10;
+        carryOver = -1;
+      } else {
+        carryOver = 0;
+      }
+      sb.append(sum);
+
+      i--;
+      j--;
+    }
+
+    if (carryOver < 0) {
+      return subtractOperation(subtracter, original, "-");
+    }
+
+    String result = sb.reverse().toString();
+    while (result.startsWith("0") && result.length() > 1) {
+      result = result.substring(1);
+    }
+
+    result = prefix + result;
+//    System.out.println("sub result: " + result);
+    return result;
+  }
 
   private String addOperation(String original, String add) {
+//    System.out.println(original + " + " + add);
     StringBuilder sb = new StringBuilder();
 
     int carryOver = 0;
