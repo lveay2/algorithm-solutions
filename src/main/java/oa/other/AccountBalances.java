@@ -17,14 +17,39 @@ public class AccountBalances {
     System.out.println(Arrays.toString(calculateBalances(balances, requests)));
     System.out.println("-----------------");
 
-    int[] balances2 = {20, 1000, 500, 40, 90};
-    String[] requests2 = {
-      "deposit 1613327630 3 400",
-      "withdraw 1613327635 1 20",
-      "withdraw 1613327651 1 50",
-      "deposit 1613327655 1 50"
-    };
-    System.out.println(Arrays.toString(calculateBalances(balances2, requests2)));
+    balances = new int[] {20, 1000, 500, 40, 90};
+    requests =
+        new String[] {
+          "deposit 1613327630 3 400",
+          "withdraw 1613327635 1 20",
+          "withdraw 1613327651 1 50",
+          "deposit 1613327655 1 50"
+        };
+    System.out.println(Arrays.toString(calculateBalances(balances, requests)));
+    System.out.println("-----------------");
+
+    balances = new int[] {300};
+    requests =
+        new String[] {
+          "withdraw 1613327630 1 100", "withdraw 1613327644 1 200"
+        };
+    System.out.println(Arrays.toString(calculateBalances(balances, requests)));
+    System.out.println("-----------------");
+
+    balances = new int[] {300};
+    requests =
+            new String[] {
+                    "withdraw 1613327630 1 100", "withdraw 1613327644 1 202", "withdraw 1613414030 1 200",
+            };
+    System.out.println(Arrays.toString(calculateBalances(balances, requests)));
+    System.out.println("-----------------");
+
+    balances = new int[] {300};
+    requests =
+            new String[] {
+                    "withdraw 1613327630 1 100", "withdraw 1613414030 1 202"
+            };
+    System.out.println(Arrays.toString(calculateBalances(balances, requests)));
   }
 
   public static final String WITHDRAW = "withdraw";
@@ -125,5 +150,4 @@ public class AccountBalances {
 
     return false;
   }
-
 }
