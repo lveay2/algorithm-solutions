@@ -29,26 +29,27 @@ public class AccountBalances {
     System.out.println("-----------------");
 
     balances = new int[] {300};
-    requests =
-        new String[] {
-          "withdraw 1613327630 1 100", "withdraw 1613327644 1 200"
-        };
+    requests = new String[] {
+            "withdraw 1613327630 1 100",
+            "withdraw 1613327644 1 200"
+    };
     System.out.println(Arrays.toString(calculateBalances(balances, requests)));
     System.out.println("-----------------");
 
     balances = new int[] {300};
-    requests =
-            new String[] {
-                    "withdraw 1613327630 1 100", "withdraw 1613327644 1 202", "withdraw 1613414030 1 200",
-            };
+    requests = new String[] {
+            "withdraw 1613327630 1 100",
+            "withdraw 1613327644 1 202",
+            "withdraw 1613414030 1 200"
+    };
     System.out.println(Arrays.toString(calculateBalances(balances, requests)));
     System.out.println("-----------------");
 
     balances = new int[] {300};
-    requests =
-            new String[] {
-                    "withdraw 1613327630 1 100", "withdraw 1613414030 1 202"
-            };
+    requests = new String[] {
+            "withdraw 1613327630 1 100",
+            "withdraw 1613414030 1 202"
+    };
     System.out.println(Arrays.toString(calculateBalances(balances, requests)));
   }
 
@@ -80,7 +81,7 @@ public class AccountBalances {
       long time = Long.parseLong(requestStrArr[1]);
       int accountId = Integer.parseInt(requestStrArr[2]);
       int amount = Integer.parseInt(requestStrArr[3]);
-      System.out.println(time + " " + accountId + " " + amount);
+//      System.out.println(time + " " + accountId + " " + amount);
 
       if (WITHDRAW.equals(requestType)) {
         invalidResult =
