@@ -55,7 +55,7 @@ public class AccountBalances {
       long time = Long.parseLong(requestStrArr[1]);
       int accountId = Integer.parseInt(requestStrArr[2]);
       int amount = Integer.parseInt(requestStrArr[3]);
-//      System.out.println(time + " " + accountId + " " + amount);
+      System.out.println(time + " " + accountId + " " + amount);
 
       if (WITHDRAW.equals(requestType)) {
         invalidResult =
@@ -92,7 +92,12 @@ public class AccountBalances {
         long nextTime = nextTimes.get(i);
         int cashBack = nextCashback.get(i);
 
-        if (time - ONE_DAY < nextTime) {
+        // balance [300]
+        // [1-1 12pm w 100] cb 2  1-2 12pm +2
+        // balance [200]
+        // [1-2 13pm w 202] cb 4
+        // balance [0]
+        if (time < nextTime) {
           remainNextTimes.add(nextTime);
           remainNextCashback.add(cashBack);
           continue;
