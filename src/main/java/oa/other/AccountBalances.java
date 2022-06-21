@@ -33,10 +33,6 @@ public class AccountBalances {
   public static final double TWO_PERCENTAGE = 0.02;
 
   public static int[] calculateBalances(int[] balances, String[] requests) {
-    //    Map<Integer, Integer> accountId2Balances = buildAccountId2BalancesMap(balances);
-    //        System.out.println("accountId2Balances: " + accountId2Balances);
-    //    Map<Integer, List<Long>> accountId2NextTime = new HashMap<>();
-    //    Map<Integer, List<Integer>> accountId2NextCashback = new HashMap<>();
     List<List<Long>> nextTimes = new ArrayList<>();
     List<List<Integer>> nextCashBacks = new ArrayList<>();
     int size = balances.length;
@@ -59,7 +55,7 @@ public class AccountBalances {
       long time = Long.parseLong(requestStrArr[1]);
       int accountId = Integer.parseInt(requestStrArr[2]);
       int amount = Integer.parseInt(requestStrArr[3]);
-      System.out.println(time + " " + accountId + " " + amount);
+//      System.out.println(time + " " + accountId + " " + amount);
 
       if (WITHDRAW.equals(requestType)) {
         invalidResult =
@@ -71,14 +67,7 @@ public class AccountBalances {
       }
     }
 
-    int[] result = new int[size];
-
-    int index = 0;
-    while (index < size) {
-      result[index] = balances[index++];
-    }
-
-    return result;
+    return balances;
   }
 
   private static void handleDeposit(int accountId, int amount, int[] balances) {
@@ -132,36 +121,4 @@ public class AccountBalances {
     return false;
   }
 
-  private static int getAmount(String request) {
-    String amount = request.split(" ")[3];
-    return Integer.valueOf(amount);
-  }
-
-  private static long getTime(String request) {
-    String time = request.split(" ")[1];
-    return Long.valueOf(time);
-  }
-
-  private static int getAccountId(String request) {
-    String accountId = request.split(" ")[2];
-    return Integer.valueOf(accountId);
-  }
-
-  private static String getRequestType(String request) {
-    if (request.startsWith(WITHDRAW)) {
-      return WITHDRAW;
-    } else if (request.startsWith(DEPOSIT)) {
-      return DEPOSIT;
-    }
-
-    return null;
-  }
-
-  private static Map<Integer, Integer> buildAccountId2BalancesMap(int[] balances) {
-    Map<Integer, Integer> accountId2Balances = new HashMap<>();
-    for (int i = 1; i <= balances.length; i++) {
-      accountId2Balances.put(i, balances[i - 1]);
-    }
-    return accountId2Balances;
-  }
 }
