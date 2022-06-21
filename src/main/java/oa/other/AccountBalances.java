@@ -33,10 +33,18 @@ public class AccountBalances {
   public static final double TWO_PERCENTAGE = 0.02;
 
   public static int[] calculateBalances(int[] balances, String[] requests) {
-    Map<Integer, Integer> accountId2Balances = buildAccountId2BalancesMap(balances);
+    //    Map<Integer, Integer> accountId2Balances = buildAccountId2BalancesMap(balances);
     //        System.out.println("accountId2Balances: " + accountId2Balances);
-    Map<Integer, List<Long>> accountId2NextTime = new HashMap<>();
-    Map<Integer, List<Integer>> accountId2NextCashback = new HashMap<>();
+    //    Map<Integer, List<Long>> accountId2NextTime = new HashMap<>();
+    //    Map<Integer, List<Integer>> accountId2NextCashback = new HashMap<>();
+    List<List<Long>> nextTimes = new ArrayList<>();
+    List<List<Integer>> nextCashBacks = new ArrayList<>();
+    int size = balances.length;
+    for (int i = 0; i < size; i++) {
+      nextTimes.add(new ArrayList<>());
+      nextCashBacks.add(new ArrayList<>());
+    }
+
     boolean invalidResult = false;
 
     for (int i = 0; i < requests.length; i++) {
@@ -45,53 +53,47 @@ public class AccountBalances {
       }
 
       String request = requests[i].trim();
-      String requestType = getRequestType(request);
-      int accountId = getAccountId(request);
-      long time = getTime(request);
-      int amount = getAmount(request);
-      //            System.out.println(time + " " + accountId + " " + amount);
+      String requestType = request.startsWith(WITHDRAW) ? WITHDRAW : DEPOSIT;
+      String[] requestStrArr = request.split(" ");
+
+      long time = Long.parseLong(requestStrArr[1]);
+      int accountId = Integer.parseInt(requestStrArr[2]);
+      int amount = Integer.parseInt(requestStrArr[3]);
+      System.out.println(time + " " + accountId + " " + amount);
 
       if (WITHDRAW.equals(requestType)) {
         invalidResult =
-            handleWithdraw(
-                time,
-                accountId,
-                amount,
-                accountId2Balances,
-                accountId2NextTime,
-                accountId2NextCashback);
+            handleWithdraw(time, accountId - 1, amount, balances, nextTimes, nextCashBacks);
         //                System.out.println("accountId2Balances: " + accountId2Balances);
       } else if (DEPOSIT.equals(requestType)) {
-        handleDeposit(accountId, amount, accountId2Balances);
+        handleDeposit(accountId - 1, amount, balances);
         //                System.out.println("accountId2Balances: " + accountId2Balances);
       }
     }
 
-    int l = balances.length;
-    int[] result = new int[l];
+    int[] result = new int[size];
 
-    int index = 1;
-    while (index <= l) {
-      result[index - 1] = accountId2Balances.get(index++);
+    int index = 0;
+    while (index < size) {
+      result[index] = balances[index++];
     }
 
     return result;
   }
 
-  private static void handleDeposit(
-      int accountId, int amount, Map<Integer, Integer> accountId2Balances) {
-    accountId2Balances.put(accountId, accountId2Balances.get(accountId) + amount);
+  private static void handleDeposit(int accountId, int amount, int[] balances) {
+    balances[accountId] = balances[accountId] + amount;
   }
 
   private static boolean handleWithdraw(
       long time,
       int accountId,
       int amount,
-      Map<Integer, Integer> accountId2Balances,
-      Map<Integer, List<Long>> accountId2NextTime,
-      Map<Integer, List<Integer>> accountId2NextCashback) {
-    List<Long> nextTimes = accountId2NextTime.get(accountId);
-    List<Integer> nextCashback = accountId2NextCashback.get(accountId);
+      int[] balances,
+      List<List<Long>> nextTimesList,
+      List<List<Integer>> nextCashBacksList) {
+    List<Long> nextTimes = nextTimesList.get(accountId);
+    List<Integer> nextCashback = nextCashBacksList.get(accountId);
 
     List<Long> remainNextTimes = new ArrayList<>();
     List<Integer> remainNextCashback = new ArrayList<>();
@@ -107,23 +109,23 @@ public class AccountBalances {
           continue;
         }
 
-        accountId2Balances.put(accountId, accountId2Balances.get(accountId) + cashBack);
+        balances[accountId] = balances[accountId] + cashBack;
       }
     }
 
-    if (accountId2Balances.get(accountId) < amount) {
+    if (balances[accountId] < amount) {
       return true;
     }
 
-    accountId2Balances.put(accountId, accountId2Balances.get(accountId) - amount);
+    balances[accountId] = balances[accountId] - amount;
     //        System.out.println("wwww accountId2Balances: " + accountId2Balances);
 
     remainNextTimes.add(time + ONE_DAY);
-    accountId2NextTime.put(accountId, remainNextTimes);
+    nextTimesList.set(accountId, remainNextTimes);
 
     int newCashBacks = (int) (amount * TWO_PERCENTAGE);
     remainNextCashback.add(newCashBacks);
-    accountId2NextCashback.put(accountId, remainNextCashback);
+    nextCashBacksList.set(accountId, remainNextCashback);
     //        System.out.println("accountId2NextTime: " + accountId2NextTime);
     //        System.out.println("accountId2NextCashback: " + accountId2NextCashback);
 
