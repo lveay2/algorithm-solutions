@@ -14,7 +14,7 @@ public class Power {
     int mod = 1000000007;
     int totalSum = 0;
 
-    int n = power.size(), k = 1, cur = 0, ans = 0;
+    int n = power.size(), k = 1, cur = 0;
     int[][] mindp = new int[n][n];
     // construct an array for sum of subarray
     int[] sum = new int[n + 1];
@@ -37,9 +37,9 @@ public class Power {
     // sum up all the possible subarrays using index i and j with the matrix and array
     for (int i = 0; i < n; i++) {
       for (int j = i; j < n; j++) {
-        ans += mindp[i][j] * (sum[j + 1] - sum[i]);
+        totalSum += mindp[i][j] * (sum[j + 1] - sum[i]);
       }
     }
-    return ans % mod;
+    return totalSum % mod;
   }
 }
