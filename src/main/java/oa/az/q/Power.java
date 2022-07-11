@@ -8,11 +8,13 @@ public class Power {
   public static void main(String[] args) {
     System.out.println(findTotalPower(Arrays.asList(2, 3, 2, 1)));
     System.out.println(findTotalPower(Arrays.asList(2, 1, 3)));
+    System.out.println(findTotalPower(Arrays.asList(4, 1, 3)));
+    System.out.println(findTotalPower(Arrays.asList(4, 1, 3)));
   }
 
   private static int findTotalPower(List<Integer> power) {
     int mod = 1000000007;
-    int totalSum = 0;
+    long totalSum = 0;
 
     int n = power.size(), k = 1, cur = 0;
     int[][] mindp = new int[n][n];
@@ -40,6 +42,6 @@ public class Power {
         totalSum += mindp[i][j] * (sum[j + 1] - sum[i]);
       }
     }
-    return totalSum % mod;
+    return  (int) (totalSum % mod);
   }
 }
