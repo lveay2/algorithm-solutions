@@ -16,7 +16,7 @@ public class Power {
     long totalSum = 0;
 
     int n = power.size(), k = 1, cur = 0;
-    long[][] mindp = new long[n][n];
+    int[][] mindp = new int[n][n];
     // construct an array for sum of subarray
     long[] sum = new long[n + 1];
     for (int num : power) {
