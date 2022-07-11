@@ -13,6 +13,8 @@ public class PacketChannel {
   }
 
   private static long maximumQuality(List<Integer> packets, int channels) {
+    System.out.println(packets);
+    System.out.println(channels);
     int pSize = packets.size();
     long ans = 0;
     if (pSize == channels) {
