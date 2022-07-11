@@ -9,7 +9,6 @@ public class Power {
     System.out.println(findTotalPower(Arrays.asList(2, 3, 2, 1)));
     System.out.println(findTotalPower(Arrays.asList(2, 1, 3)));
     System.out.println(findTotalPower(Arrays.asList(4, 1, 3)));
-    System.out.println(findTotalPower(Arrays.asList(4, 1, 3)));
   }
 
   private static int findTotalPower(List<Integer> power) {
@@ -17,9 +16,9 @@ public class Power {
     long totalSum = 0;
 
     int n = power.size(), k = 1, cur = 0;
-    int[][] mindp = new int[n][n];
+    long[][] mindp = new long[n][n];
     // construct an array for sum of subarray
-    int[] sum = new int[n + 1];
+    long[] sum = new long[n + 1];
     for (int num : power) {
       cur += num;
       sum[k++] = cur;
