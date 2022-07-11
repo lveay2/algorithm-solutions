@@ -14,12 +14,12 @@ public class PacketChannel {
 
   private static long maximumQuality(List<Integer> packets, int channels) {
     int pSize = packets.size();
-    int ans = 0;
+    long ans = 0;
     if (pSize == channels) {
       for (int p: packets) {
         ans += p;
       }
-      return (long) ans;
+      return ans;
     }
 
     Collections.sort(packets);
