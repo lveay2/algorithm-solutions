@@ -38,7 +38,6 @@ public class PacketChannel {
       System.out.println(doubleValue);
 
       ans += Double.valueOf(doubleValue).longValue();
-
     } else {
       System.out.println(ans + " " + packets.get((remain - 1) / 2));
 
