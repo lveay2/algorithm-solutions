@@ -32,6 +32,8 @@ public class _3_Longest_Substring_Without_Repeating_Characters {
   public static void main(String[] args) {
     System.out.println("1 == " + lengthOfLongestSubstring(" "));
     System.out.println("2 == " + lengthOfLongestSubstring("abba"));
+    System.out.println("3 == " + lengthOfLongestSubstring("abc"));
+    System.out.println("3 == " + lengthOfLongestSubstring("abcb"));
     System.out.println("2 == " + lengthOfLongestSubstring("abbbbbbbbbbbba"));
     System.out.println("3 == " + lengthOfLongestSubstring("abcabcbb"));
     System.out.println("3 == " + lengthOfLongestSubstring("pwwkew"));
